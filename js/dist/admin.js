@@ -13,15 +13,24 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ PWALogoUploadButton)
 /* harmony export */ });
-/* harmony import */ var flarum_common_components_UploadImageButton__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! flarum/common/components/UploadImageButton */ "flarum/common/components/UploadImageButton");
-/* harmony import */ var flarum_common_components_UploadImageButton__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(flarum_common_components_UploadImageButton__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/esm/extends */ "./node_modules/@babel/runtime/helpers/esm/extends.js");
+/* harmony import */ var _babel_runtime_helpers_esm_inheritsLoose__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/esm/inheritsLoose */ "./node_modules/@babel/runtime/helpers/esm/inheritsLoose.js");
+/* harmony import */ var flarum_common_components_UploadImageButton__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! flarum/common/components/UploadImageButton */ "flarum/common/components/UploadImageButton");
+/* harmony import */ var flarum_common_components_UploadImageButton__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(flarum_common_components_UploadImageButton__WEBPACK_IMPORTED_MODULE_2__);
 
-class PWALogoUploadButton extends (flarum_common_components_UploadImageButton__WEBPACK_IMPORTED_MODULE_0___default()) {
-  static initAttrs(attrs) {
-    super.initAttrs(attrs);
-    attrs.name = `pwa-icon-${attrs.size}x${attrs.size}`;
+
+
+var PWALogoUploadButton = /*#__PURE__*/function (_UploadImageButton) {
+  (0,_babel_runtime_helpers_esm_inheritsLoose__WEBPACK_IMPORTED_MODULE_1__["default"])(PWALogoUploadButton, _UploadImageButton);
+  function PWALogoUploadButton() {
+    return _UploadImageButton.apply(this, arguments) || this;
   }
-  view(vnode) {
+  PWALogoUploadButton.initAttrs = function initAttrs(attrs) {
+    _UploadImageButton.initAttrs.call(this, attrs);
+    attrs.name = "pwa-icon-" + attrs.size + "x" + attrs.size;
+  };
+  var _proto = PWALogoUploadButton.prototype;
+  _proto.view = function view(vnode) {
     this.attrs.loading = this.loading;
     this.attrs.className = (this.attrs.className || '') + ' Button';
     if (app.data.settings['askvortsov-pwa.icon_' + this.attrs.size + '_path']) {
@@ -31,27 +40,27 @@ class PWALogoUploadButton extends (flarum_common_components_UploadImageButton__W
     } else {
       this.attrs.onclick = this.upload.bind(this);
     }
-    return super.view({
-      ...vnode,
+    return _UploadImageButton.prototype.view.call(this, (0,_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__["default"])({}, vnode, {
       children: app.translator.trans('core.admin.upload_image.upload_buttonx')
-    });
-  }
-  remove() {
+    }));
+  };
+  _proto.remove = function remove() {
     this.loading = true;
     m.redraw();
     app.request({
       method: 'DELETE',
       url: this.deleteUrl()
     }).then(this.success.bind(this), this.failure.bind(this));
-  }
-  deleteUrl() {
+  };
+  _proto.deleteUrl = function deleteUrl() {
     return app.forum.attribute('apiUrl') + '/pwa-settings/logo/' + this.attrs.size;
-  }
-  resourceUrl() {
+  };
+  _proto.resourceUrl = function resourceUrl() {
     return app.forum.attribute('apiUrl') + '/pwa/logo/' + this.attrs.size;
-  }
-}
-flarum.reg.add('askvortsov-pwa', 'admin/components/PWALogoUploadButton', PWALogoUploadButton);
+  };
+  return PWALogoUploadButton;
+}((flarum_common_components_UploadImageButton__WEBPACK_IMPORTED_MODULE_2___default()));
+
 
 /***/ }),
 
@@ -66,29 +75,37 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ PWAPage)
 /* harmony export */ });
-/* harmony import */ var flarum_admin_components_ExtensionPage__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! flarum/admin/components/ExtensionPage */ "flarum/admin/components/ExtensionPage");
-/* harmony import */ var flarum_admin_components_ExtensionPage__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(flarum_admin_components_ExtensionPage__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var flarum_common_components_Alert__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! flarum/common/components/Alert */ "flarum/common/components/Alert");
-/* harmony import */ var flarum_common_components_Alert__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(flarum_common_components_Alert__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var flarum_common_components_Button__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! flarum/common/components/Button */ "flarum/common/components/Button");
-/* harmony import */ var flarum_common_components_Button__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(flarum_common_components_Button__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var flarum_common_components_LoadingIndicator__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! flarum/common/components/LoadingIndicator */ "flarum/common/components/LoadingIndicator");
-/* harmony import */ var flarum_common_components_LoadingIndicator__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(flarum_common_components_LoadingIndicator__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _PWALogoUploadButton__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./PWALogoUploadButton */ "./src/admin/components/PWALogoUploadButton.js");
-/* harmony import */ var _PWAUploadFirebaseConfigForm__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./PWAUploadFirebaseConfigForm */ "./src/admin/components/PWAUploadFirebaseConfigForm.js");
+/* harmony import */ var _babel_runtime_helpers_esm_inheritsLoose__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/esm/inheritsLoose */ "./node_modules/@babel/runtime/helpers/esm/inheritsLoose.js");
+/* harmony import */ var flarum_admin_components_ExtensionPage__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! flarum/admin/components/ExtensionPage */ "flarum/admin/components/ExtensionPage");
+/* harmony import */ var flarum_admin_components_ExtensionPage__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(flarum_admin_components_ExtensionPage__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var flarum_common_components_Alert__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! flarum/common/components/Alert */ "flarum/common/components/Alert");
+/* harmony import */ var flarum_common_components_Alert__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(flarum_common_components_Alert__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var flarum_common_components_Button__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! flarum/common/components/Button */ "flarum/common/components/Button");
+/* harmony import */ var flarum_common_components_Button__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(flarum_common_components_Button__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var flarum_common_components_LoadingIndicator__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! flarum/common/components/LoadingIndicator */ "flarum/common/components/LoadingIndicator");
+/* harmony import */ var flarum_common_components_LoadingIndicator__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(flarum_common_components_LoadingIndicator__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _PWALogoUploadButton__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./PWALogoUploadButton */ "./src/admin/components/PWALogoUploadButton.js");
+/* harmony import */ var _PWAUploadFirebaseConfigForm__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./PWAUploadFirebaseConfigForm */ "./src/admin/components/PWAUploadFirebaseConfigForm.js");
 
 
 
 
 
 
-class PWAPage extends (flarum_admin_components_ExtensionPage__WEBPACK_IMPORTED_MODULE_0___default()) {
-  oninit(vnode) {
-    super.oninit(vnode);
+
+var PWAPage = /*#__PURE__*/function (_ExtensionPage) {
+  (0,_babel_runtime_helpers_esm_inheritsLoose__WEBPACK_IMPORTED_MODULE_0__["default"])(PWAPage, _ExtensionPage);
+  function PWAPage() {
+    return _ExtensionPage.apply(this, arguments) || this;
+  }
+  var _proto = PWAPage.prototype;
+  _proto.oninit = function oninit(vnode) {
+    _ExtensionPage.prototype.oninit.call(this, vnode);
     this.saving = false;
     this.refresh();
-  }
-  refresh() {
+  };
+  _proto.refresh = function refresh() {
+    var _this = this;
     this.loading = true;
     this.status_messages = [];
     this.manifest = {};
@@ -96,27 +113,28 @@ class PWAPage extends (flarum_admin_components_ExtensionPage__WEBPACK_IMPORTED_M
     app.request({
       method: 'GET',
       url: app.forum.attribute('apiUrl') + '/pwa-settings'
-    }).then(response => {
-      this.manifest = response['data']['attributes']['manifest'];
-      this.sizes = response['data']['attributes']['sizes'];
-      this.status_messages = response['data']['attributes']['status_messages'];
-      this.loading = false;
+    }).then(function (response) {
+      _this.manifest = response['data']['attributes']['manifest'];
+      _this.sizes = response['data']['attributes']['sizes'];
+      _this.status_messages = response['data']['attributes']['status_messages'];
+      _this.loading = false;
       m.redraw();
     });
-  }
-  checkExistence(url) {
-    let http = new XMLHttpRequest();
+  };
+  _proto.checkExistence = function checkExistence(url) {
+    var http = new XMLHttpRequest();
     http.open('HEAD', url, false);
     http.send();
     return http.status != 404;
-  }
-  content() {
+  };
+  _proto.content = function content() {
+    var _this2 = this;
     if (this.loading || this.saving) {
       return m("div", {
         className: "PWAPage"
       }, m("div", {
         className: "container"
-      }, m((flarum_common_components_LoadingIndicator__WEBPACK_IMPORTED_MODULE_3___default()), null)));
+      }, m((flarum_common_components_LoadingIndicator__WEBPACK_IMPORTED_MODULE_4___default()), null)));
     }
     return m("div", {
       className: "PWAPage"
@@ -125,26 +143,28 @@ class PWAPage extends (flarum_admin_components_ExtensionPage__WEBPACK_IMPORTED_M
     }, m("form", null, m("h2", null, app.translator.trans('askvortsov-pwa.admin.pwa.heading')), m("div", {
       className: "helpText"
     }, app.translator.trans('askvortsov-pwa.admin.pwa.text')), m("div", {
-      class: "statusCheck"
-    }, m("legend", null, app.translator.trans('askvortsov-pwa.admin.pwa.status_check_heading')), this.status_messages.map(message => m((flarum_common_components_Alert__WEBPACK_IMPORTED_MODULE_1___default()), {
-      type: message.type,
-      dismissible: false
-    }, [message.message]))), m("fieldset", {
-      class: "parent"
+      "class": "statusCheck"
+    }, m("legend", null, app.translator.trans('askvortsov-pwa.admin.pwa.status_check_heading')), this.status_messages.map(function (message) {
+      return m((flarum_common_components_Alert__WEBPACK_IMPORTED_MODULE_2___default()), {
+        type: message.type,
+        dismissible: false
+      }, [message.message]);
+    })), m("fieldset", {
+      "class": "parent"
     }, m("legend", null, app.translator.trans('askvortsov-pwa.admin.pwa.maintenance.heading')), this.buildSettingComponent({
       setting: 'askvortsov-pwa.debug',
       label: app.translator.trans('askvortsov-pwa.admin.pwa.maintenance.debug_label'),
       help: app.translator.trans('askvortsov-pwa.admin.pwa.maintenance.debug_text'),
       type: 'boolean'
-    }), this.buildSettingComponent(() => {
-      return m("div", null, m((flarum_common_components_Button__WEBPACK_IMPORTED_MODULE_2___default()), {
+    }), this.buildSettingComponent(function () {
+      return m("div", null, m((flarum_common_components_Button__WEBPACK_IMPORTED_MODULE_3___default()), {
         className: "Button",
-        onclick: this.resetVapid.bind(this)
+        onclick: _this2.resetVapid.bind(_this2)
       }, "Reset VAPID keys"), m("div", {
         className: "helpText"
       }, app.translator.trans('askvortsov-pwa.admin.pwa.maintenance.reset_vapid_text')));
     })), m("fieldset", {
-      class: "parent"
+      "class": "parent"
     }, m("fieldset", null, m("legend", null, app.translator.trans('askvortsov-pwa.admin.pwa.about.heading')), this.buildSettingComponent({
       setting: 'askvortsov-pwa.shortName',
       placeholder: this.setting('forum_title')(),
@@ -164,7 +184,7 @@ class PWAPage extends (flarum_admin_components_ExtensionPage__WEBPACK_IMPORTED_M
       value: this.manifest.description,
       disabled: true
     }, this.manifest.description))), m("fieldset", {
-      class: "parent"
+      "class": "parent"
     }, m("fieldset", null, m("legend", null, app.translator.trans('askvortsov-pwa.admin.pwa.colors.heading')), this.buildSettingComponent({
       setting: 'askvortsov-pwa.themeColor',
       placeholder: this.setting('theme_primary_color')(),
@@ -177,7 +197,7 @@ class PWAPage extends (flarum_admin_components_ExtensionPage__WEBPACK_IMPORTED_M
       help: app.translator.trans('askvortsov-pwa.admin.pwa.colors.background_color_text'),
       type: 'color-preview'
     }))), m("fieldset", {
-      class: "parent"
+      "class": "parent"
     }, m("fieldset", null, m("legend", null, app.translator.trans('askvortsov-pwa.admin.pwa.other.heading')), this.buildSettingComponent({
       setting: 'askvortsov-pwa.forcePortrait',
       label: app.translator.trans('askvortsov-pwa.admin.pwa.other.force_portrait_text'),
@@ -209,24 +229,24 @@ class PWAPage extends (flarum_admin_components_ExtensionPage__WEBPACK_IMPORTED_M
       type: 'bool'
     }))), this.submitButton(), m("fieldset", null, m("legend", null, app.translator.trans('askvortsov-pwa.admin.pwa.logo_heading')), m("div", {
       className: "helpText"
-    }, app.translator.trans('askvortsov-pwa.admin.pwa.logo_text')), this.sizes.map(size => {
+    }, app.translator.trans('askvortsov-pwa.admin.pwa.logo_text')), this.sizes.map(function (size) {
       return m("fieldset", {
-        class: "logoFieldset"
-      }, m(_PWALogoUploadButton__WEBPACK_IMPORTED_MODULE_4__["default"], {
+        "class": "logoFieldset"
+      }, m(_PWALogoUploadButton__WEBPACK_IMPORTED_MODULE_5__["default"], {
         size: size
       }), m("div", {
         className: "helpText"
       }, app.translator.trans('askvortsov-pwa.admin.pwa.logo_size_text', {
-        size
+        size: size
       })));
-    }))), m(_PWAUploadFirebaseConfigForm__WEBPACK_IMPORTED_MODULE_5__["default"], null)));
-  }
-  resetVapid() {
+    }))), m(_PWAUploadFirebaseConfigForm__WEBPACK_IMPORTED_MODULE_6__["default"], null)));
+  };
+  _proto.resetVapid = function resetVapid() {
     if (confirm(app.translator.trans('askvortsov-pwa.admin.pwa.maintenance.reset_vapid_confirm'))) {
       app.request({
         method: 'POST',
         url: app.forum.attribute('apiUrl') + '/pwa-settings/reset_vapid'
-      }).then(response => {
+      }).then(function (response) {
         app.alerts.show({
           type: 'success'
         }, app.translator.trans('askvortsov-pwa.admin.pwa.maintenance.reset_vapid_success', {
@@ -234,17 +254,18 @@ class PWAPage extends (flarum_admin_components_ExtensionPage__WEBPACK_IMPORTED_M
         }));
       });
     }
-  }
-  saveSettings(e) {
-    const hex = /^(#[0-9a-f]{3}([0-9a-f]{3})?)?$/i;
+  };
+  _proto.saveSettings = function saveSettings(e) {
+    var hex = /^(#[0-9a-f]{3}([0-9a-f]{3})?)?$/i;
     if (!hex.test(this.setting('askvortsov-pwa.backgroundColor')())) {
       alert(app.translator.trans('core.admin.appearance.enter_hex_message'));
       return;
     }
-    return super.saveSettings(e);
-  }
-}
-flarum.reg.add('askvortsov-pwa', 'admin/components/PWAPage', PWAPage);
+    return _ExtensionPage.prototype.saveSettings.call(this, e);
+  };
+  return PWAPage;
+}((flarum_admin_components_ExtensionPage__WEBPACK_IMPORTED_MODULE_1___default()));
+
 
 /***/ }),
 
@@ -259,11 +280,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ PWAUploadFirebaseConfigForm)
 /* harmony export */ });
-/* harmony import */ var flarum_common_Component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! flarum/common/Component */ "flarum/common/Component");
-/* harmony import */ var flarum_common_Component__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(flarum_common_Component__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _babel_runtime_helpers_esm_inheritsLoose__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/esm/inheritsLoose */ "./node_modules/@babel/runtime/helpers/esm/inheritsLoose.js");
+/* harmony import */ var flarum_common_Component__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! flarum/common/Component */ "flarum/common/Component");
+/* harmony import */ var flarum_common_Component__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(flarum_common_Component__WEBPACK_IMPORTED_MODULE_1__);
 
-class PWAUploadFirebaseConfigForm extends (flarum_common_Component__WEBPACK_IMPORTED_MODULE_0___default()) {
-  view(vnode) {
+
+var PWAUploadFirebaseConfigForm = /*#__PURE__*/function (_Component) {
+  (0,_babel_runtime_helpers_esm_inheritsLoose__WEBPACK_IMPORTED_MODULE_0__["default"])(PWAUploadFirebaseConfigForm, _Component);
+  function PWAUploadFirebaseConfigForm() {
+    return _Component.apply(this, arguments) || this;
+  }
+  var _proto = PWAUploadFirebaseConfigForm.prototype;
+  _proto.view = function view(vnode) {
     return m('[', null, m("form", {
       action: "/pwa/firebase-config",
       method: "POST",
@@ -276,7 +304,9 @@ class PWAUploadFirebaseConfigForm extends (flarum_common_Component__WEBPACK_IMPO
     }, app.translator.trans('askvortsov-pwa.admin.pwa.firebase_config.see_documentation_here'))), m("button", {
       type: "button",
       className: "Button",
-      onclick: () => document.querySelector('#flarum-pwa-upload-button').click()
+      onclick: function onclick() {
+        return document.querySelector('#flarum-pwa-upload-button').click();
+      }
     }, app.translator.trans('askvortsov-pwa.admin.pwa.firebase_config.upload_file')), m("input", {
       id: "flarum-pwa-upload-button",
       type: "file",
@@ -285,22 +315,23 @@ class PWAUploadFirebaseConfigForm extends (flarum_common_Component__WEBPACK_IMPO
         opacity: 0
       }
     })))));
-  }
-  updateFirebaseConfig(event) {
-    const body = new FormData();
+  };
+  _proto.updateFirebaseConfig = function updateFirebaseConfig(event) {
+    var body = new FormData();
     body.append('file', event.target.files[0]);
     app.request({
       method: 'POST',
       url: app.forum.attribute('apiUrl') + '/pwa-settings/firebase-config',
       body: body
-    }).then(response => {
+    }).then(function (response) {
       app.alerts.show({
         type: 'success'
       }, app.translator.trans('askvortsov-pwa.admin.pwa.firebase_config.upload_successful'));
     });
-  }
-}
-flarum.reg.add('askvortsov-pwa', 'admin/components/PWAUploadFirebaseConfigForm', PWAUploadFirebaseConfigForm);
+  };
+  return PWAUploadFirebaseConfigForm;
+}((flarum_common_Component__WEBPACK_IMPORTED_MODULE_1___default()));
+
 
 /***/ }),
 
@@ -314,75 +345,145 @@ flarum.reg.add('askvortsov-pwa', 'admin/components/PWAUploadFirebaseConfigForm',
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_PWAPage__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./components/PWAPage */ "./src/admin/components/PWAPage.js");
 
-app.initializers.add('askvortsov/flarum-pwa', () => {
-  app.registry.for('askvortsov-pwa').registerPage(_components_PWAPage__WEBPACK_IMPORTED_MODULE_0__["default"]);
+app.initializers.add('askvortsov/flarum-pwa', function () {
+  app.registry["for"]('askvortsov-pwa').registerPage(_components_PWAPage__WEBPACK_IMPORTED_MODULE_0__["default"]);
 });
 
 /***/ }),
 
 /***/ "flarum/admin/components/ExtensionPage":
-/*!***************************************************************************!*\
-  !*** external "flarum.reg.get('core', 'admin/components/ExtensionPage')" ***!
-  \***************************************************************************/
+/*!***********************************************************************!*\
+  !*** external "flarum.core.compat['admin/components/ExtensionPage']" ***!
+  \***********************************************************************/
 /***/ ((module) => {
 
 "use strict";
-module.exports = flarum.reg.get('core', 'admin/components/ExtensionPage');
+module.exports = flarum.core.compat['admin/components/ExtensionPage'];
 
 /***/ }),
 
 /***/ "flarum/common/Component":
-/*!*************************************************************!*\
-  !*** external "flarum.reg.get('core', 'common/Component')" ***!
-  \*************************************************************/
+/*!*********************************************************!*\
+  !*** external "flarum.core.compat['common/Component']" ***!
+  \*********************************************************/
 /***/ ((module) => {
 
 "use strict";
-module.exports = flarum.reg.get('core', 'common/Component');
+module.exports = flarum.core.compat['common/Component'];
 
 /***/ }),
 
 /***/ "flarum/common/components/Alert":
-/*!********************************************************************!*\
-  !*** external "flarum.reg.get('core', 'common/components/Alert')" ***!
-  \********************************************************************/
+/*!****************************************************************!*\
+  !*** external "flarum.core.compat['common/components/Alert']" ***!
+  \****************************************************************/
 /***/ ((module) => {
 
 "use strict";
-module.exports = flarum.reg.get('core', 'common/components/Alert');
+module.exports = flarum.core.compat['common/components/Alert'];
 
 /***/ }),
 
 /***/ "flarum/common/components/Button":
-/*!*********************************************************************!*\
-  !*** external "flarum.reg.get('core', 'common/components/Button')" ***!
-  \*********************************************************************/
+/*!*****************************************************************!*\
+  !*** external "flarum.core.compat['common/components/Button']" ***!
+  \*****************************************************************/
 /***/ ((module) => {
 
 "use strict";
-module.exports = flarum.reg.get('core', 'common/components/Button');
+module.exports = flarum.core.compat['common/components/Button'];
 
 /***/ }),
 
 /***/ "flarum/common/components/LoadingIndicator":
-/*!*******************************************************************************!*\
-  !*** external "flarum.reg.get('core', 'common/components/LoadingIndicator')" ***!
-  \*******************************************************************************/
+/*!***************************************************************************!*\
+  !*** external "flarum.core.compat['common/components/LoadingIndicator']" ***!
+  \***************************************************************************/
 /***/ ((module) => {
 
 "use strict";
-module.exports = flarum.reg.get('core', 'common/components/LoadingIndicator');
+module.exports = flarum.core.compat['common/components/LoadingIndicator'];
 
 /***/ }),
 
 /***/ "flarum/common/components/UploadImageButton":
-/*!********************************************************************************!*\
-  !*** external "flarum.reg.get('core', 'common/components/UploadImageButton')" ***!
-  \********************************************************************************/
+/*!****************************************************************************!*\
+  !*** external "flarum.core.compat['common/components/UploadImageButton']" ***!
+  \****************************************************************************/
 /***/ ((module) => {
 
 "use strict";
-module.exports = flarum.reg.get('core', 'common/components/UploadImageButton');
+module.exports = flarum.core.compat['common/components/UploadImageButton'];
+
+/***/ }),
+
+/***/ "./node_modules/@babel/runtime/helpers/esm/extends.js":
+/*!************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/esm/extends.js ***!
+  \************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ _extends)
+/* harmony export */ });
+function _extends() {
+  _extends = Object.assign ? Object.assign.bind() : function (target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i];
+      for (var key in source) {
+        if (Object.prototype.hasOwnProperty.call(source, key)) {
+          target[key] = source[key];
+        }
+      }
+    }
+    return target;
+  };
+  return _extends.apply(this, arguments);
+}
+
+/***/ }),
+
+/***/ "./node_modules/@babel/runtime/helpers/esm/inheritsLoose.js":
+/*!******************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/esm/inheritsLoose.js ***!
+  \******************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ _inheritsLoose)
+/* harmony export */ });
+/* harmony import */ var _setPrototypeOf_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./setPrototypeOf.js */ "./node_modules/@babel/runtime/helpers/esm/setPrototypeOf.js");
+
+function _inheritsLoose(subClass, superClass) {
+  subClass.prototype = Object.create(superClass.prototype);
+  subClass.prototype.constructor = subClass;
+  (0,_setPrototypeOf_js__WEBPACK_IMPORTED_MODULE_0__["default"])(subClass, superClass);
+}
+
+/***/ }),
+
+/***/ "./node_modules/@babel/runtime/helpers/esm/setPrototypeOf.js":
+/*!*******************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/esm/setPrototypeOf.js ***!
+  \*******************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ _setPrototypeOf)
+/* harmony export */ });
+function _setPrototypeOf(o, p) {
+  _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf(o, p) {
+    o.__proto__ = p;
+    return o;
+  };
+  return _setPrototypeOf(o, p);
+}
 
 /***/ })
 
@@ -393,7 +494,7 @@ module.exports = flarum.reg.get('core', 'common/components/UploadImageButton');
 /******/ 	
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
-/******/ 		flarum.reg._webpack_runtimes["askvortsov-pwa"] ||= __webpack_require__;// Check if module is in cache
+/******/ 		// Check if module is in cache
 /******/ 		var cachedModule = __webpack_module_cache__[moduleId];
 /******/ 		if (cachedModule !== undefined) {
 /******/ 			return cachedModule.exports;
@@ -455,7 +556,7 @@ module.exports = flarum.reg.get('core', 'common/components/UploadImageButton');
 /******/ 	
 /************************************************************************/
 var __webpack_exports__ = {};
-// This entry needs to be wrapped in an IIFE because it needs to be in strict mode.
+// This entry need to be wrapped in an IIFE because it need to be in strict mode.
 (() => {
 "use strict";
 /*!******************!*\
