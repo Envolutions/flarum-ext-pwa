@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of askvortsov/flarum-pwa
+ *
+ *  Copyright (c) 2021 Alexander Skvortsov.
+ *
+ *  For detailed copyright and license information, please view the
+ *  LICENSE file that was distributed with this source code.
+ */
+
 namespace Askvortsov\FlarumPWA\Api\Resource;
 
 use Askvortsov\FlarumPWA\Event\SetVapidKeyEvent;
@@ -11,10 +20,10 @@ use Flarum\Api\Endpoint;
 use Flarum\Api\Resource\AbstractResource;
 use Flarum\Http\Exception\RouteNotFoundException;
 use Flarum\Http\UrlGenerator;
-use Illuminate\Contracts\Filesystem\Factory;
-use Illuminate\Contracts\Filesystem\Filesystem;
 use Flarum\Locale\TranslatorInterface;
 use Flarum\Settings\SettingsRepositoryInterface;
+use Illuminate\Contracts\Filesystem\Factory;
+use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Support\Arr;
 use Laminas\Diactoros\Response\EmptyResponse;
 use Laminas\Diactoros\Response\JsonResponse;
@@ -30,7 +39,7 @@ class PWASettingsResource extends AbstractResource
         protected TranslatorInterface $translator,
         protected UrlGenerator $url,
         protected Factory $filesystemFactory
-    ){
+    ) {
         $this->uploadDir = $filesystemFactory->disk('flarum-assets');
     }
 
@@ -44,11 +53,11 @@ class PWASettingsResource extends AbstractResource
         return [
             Endpoint\Endpoint::make('askvortsov-pwa.settings')
                 ->route('GET', '/')
-                ->action(function (){
+                ->action(function () {
                     $status_messages = [];
 
                     $logo = false;
-                    
+
                     foreach (Util::$ICON_SIZES as $size) {
                         if ($size >= 144 && $this->settings->get("askvortsov-pwa.icon_{$size}_path")) {
                             $logo = true;
@@ -120,7 +129,7 @@ class PWASettingsResource extends AbstractResource
                         'status_messages' => $status_messages,
                     ];
                 })
-                ->response(function(Context $context, array $results){
+                ->response(function(Context $context, array $results) {
                     return new JsonResponse([
                         'data' => [
                             'attributes' => $results,
@@ -131,7 +140,7 @@ class PWASettingsResource extends AbstractResource
                 }),
             Endpoint\Endpoint::make('askvortsov-pwa.size_delete')
                 ->route('DELETE', '/logo/{size}')
-                ->action(function (Context $context){
+                ->action(function (Context $context) {
                     $size = Arr::get($context->request->getQueryParams(), 'size');
                     $request = $context->request;
                     $context->getActor()->assertAdmin();
@@ -152,9 +161,9 @@ class PWASettingsResource extends AbstractResource
                 ->response(fn () => new EmptyResponse(204)),
             Endpoint\Endpoint::make('askvortsov-pwa.reset_vapid')
                 ->route('POST', '/reset_vapid')
-                ->action(function(Context $context){
+                ->action(function(Context $context) {
                     $context->getActor()->assertAdmin();
-                    
+
                     $keys = VAPID::createVapidKeys();
                     $this->events->dispatch(new SetVapidKeyEvent($keys));
 
@@ -163,12 +172,12 @@ class PWASettingsResource extends AbstractResource
                     $count = $query->count();
                     $query->delete();
 
-                    return ["count" => $count];
+                    return ['count' => $count];
                 })
-                ->response(fn(Context $context, array $results) => new JsonResponse(['deleted' => $results["count"]])),
+                ->response(fn (Context $context, array $results) => new JsonResponse(['deleted' => $results['count']])),
             Endpoint\Endpoint::make('askvortsov-pwa.firebase-config.store')
                 ->route('POST', '/firebase-config')
-                ->action(function(Context $context){
+                ->action(function(Context $context) {
                     $request = $context->request;
                     $files = $request->getUploadedFiles();
 
@@ -180,8 +189,8 @@ class PWASettingsResource extends AbstractResource
                         $config->getStream()->getContents(),
                     );
                 })
-                ->response(function(){
-                    return new JsonResponse(["data" => null]);
+                ->response(function() {
+                    return new JsonResponse(['data' => null]);
                 })
         ];
     }

@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of askvortsov/flarum-pwa
+ *
+ *  Copyright (c) 2021 Alexander Skvortsov.
+ *
+ *  For detailed copyright and license information, please view the
+ *  LICENSE file that was distributed with this source code.
+ */
+
 namespace Askvortsov\FlarumPWA\Listener;
 
 use Askvortsov\FlarumPWA\Event\CreateOrUpdateFirebasePushSubscriptionEvent;
@@ -11,7 +20,7 @@ class CreateOrUpdateFirebasePushSubscriptionListener
 
     public function __construct(FirebasePushSubscription $firebasePushSubscription)
     {
-        $this->firebasePushSubscription = $firebasePushSubscription;    
+        $this->firebasePushSubscription = $firebasePushSubscription;
     }
 
     public function handle(CreateOrUpdateFirebasePushSubscriptionEvent $event)
@@ -25,7 +34,7 @@ class CreateOrUpdateFirebasePushSubscriptionListener
             ->where('user_id', $user_id)
             ->first();
 
-        if ( $checkRecord ) {
+        if ($checkRecord) {
             $checkRecord->token = $token;
             $checkRecord->save();
         } else {
