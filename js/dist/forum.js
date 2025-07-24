@@ -1,5 +1,4 @@
 /******/ (() => { // webpackBootstrap
-/******/ 	// runtime can't be in strict mode because a global variable is assign and maybe created.
 /******/ 	var __webpack_modules__ = ({
 
 /***/ "./node_modules/idb/build/esm/index.js":
@@ -11,12 +10,19 @@
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   deleteDB: () => (/* binding */ deleteDB),
-/* harmony export */   openDB: () => (/* binding */ openDB),
-/* harmony export */   unwrap: () => (/* reexport safe */ _wrap_idb_value_js__WEBPACK_IMPORTED_MODULE_0__.u),
-/* harmony export */   wrap: () => (/* reexport safe */ _wrap_idb_value_js__WEBPACK_IMPORTED_MODULE_0__.w)
+/* harmony export */   "deleteDB": () => (/* binding */ deleteDB),
+/* harmony export */   "openDB": () => (/* binding */ openDB),
+/* harmony export */   "unwrap": () => (/* reexport safe */ _wrap_idb_value_js__WEBPACK_IMPORTED_MODULE_3__.u),
+/* harmony export */   "wrap": () => (/* reexport safe */ _wrap_idb_value_js__WEBPACK_IMPORTED_MODULE_3__.w)
 /* harmony export */ });
-/* harmony import */ var _wrap_idb_value_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./wrap-idb-value.js */ "./node_modules/idb/build/esm/wrap-idb-value.js");
+/* harmony import */ var _babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/esm/extends */ "./node_modules/@babel/runtime/helpers/esm/extends.js");
+/* harmony import */ var _babel_runtime_helpers_esm_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/esm/asyncToGenerator */ "./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _wrap_idb_value_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./wrap-idb-value.js */ "./node_modules/idb/build/esm/wrap-idb-value.js");
+
+
+
 
 
 
@@ -28,24 +34,29 @@ __webpack_require__.r(__webpack_exports__);
  * @param callbacks Additional callbacks.
  */
 function openDB(name, version, _temp) {
-  let {
-    blocked,
-    upgrade,
-    blocking,
-    terminated
-  } = _temp === void 0 ? {} : _temp;
-  const request = indexedDB.open(name, version);
-  const openPromise = (0,_wrap_idb_value_js__WEBPACK_IMPORTED_MODULE_0__.w)(request);
+  var _ref = _temp === void 0 ? {} : _temp,
+    blocked = _ref.blocked,
+    upgrade = _ref.upgrade,
+    blocking = _ref.blocking,
+    terminated = _ref.terminated;
+  var request = indexedDB.open(name, version);
+  var openPromise = (0,_wrap_idb_value_js__WEBPACK_IMPORTED_MODULE_3__.w)(request);
   if (upgrade) {
-    request.addEventListener('upgradeneeded', event => {
-      upgrade((0,_wrap_idb_value_js__WEBPACK_IMPORTED_MODULE_0__.w)(request.result), event.oldVersion, event.newVersion, (0,_wrap_idb_value_js__WEBPACK_IMPORTED_MODULE_0__.w)(request.transaction));
+    request.addEventListener('upgradeneeded', function (event) {
+      upgrade((0,_wrap_idb_value_js__WEBPACK_IMPORTED_MODULE_3__.w)(request.result), event.oldVersion, event.newVersion, (0,_wrap_idb_value_js__WEBPACK_IMPORTED_MODULE_3__.w)(request.transaction));
     });
   }
-  if (blocked) request.addEventListener('blocked', () => blocked());
-  openPromise.then(db => {
-    if (terminated) db.addEventListener('close', () => terminated());
-    if (blocking) db.addEventListener('versionchange', () => blocking());
-  }).catch(() => {});
+  if (blocked) request.addEventListener('blocked', function () {
+    return blocked();
+  });
+  openPromise.then(function (db) {
+    if (terminated) db.addEventListener('close', function () {
+      return terminated();
+    });
+    if (blocking) db.addEventListener('versionchange', function () {
+      return blocking();
+    });
+  })["catch"](function () {});
   return openPromise;
 }
 /**
@@ -54,49 +65,87 @@ function openDB(name, version, _temp) {
  * @param name Name of the database.
  */
 function deleteDB(name, _temp2) {
-  let {
-    blocked
-  } = _temp2 === void 0 ? {} : _temp2;
-  const request = indexedDB.deleteDatabase(name);
-  if (blocked) request.addEventListener('blocked', () => blocked());
-  return (0,_wrap_idb_value_js__WEBPACK_IMPORTED_MODULE_0__.w)(request).then(() => undefined);
+  var _ref2 = _temp2 === void 0 ? {} : _temp2,
+    blocked = _ref2.blocked;
+  var request = indexedDB.deleteDatabase(name);
+  if (blocked) request.addEventListener('blocked', function () {
+    return blocked();
+  });
+  return (0,_wrap_idb_value_js__WEBPACK_IMPORTED_MODULE_3__.w)(request).then(function () {
+    return undefined;
+  });
 }
-const readMethods = ['get', 'getKey', 'getAll', 'getAllKeys', 'count'];
-const writeMethods = ['put', 'add', 'delete', 'clear'];
-const cachedMethods = new Map();
+var readMethods = ['get', 'getKey', 'getAll', 'getAllKeys', 'count'];
+var writeMethods = ['put', 'add', 'delete', 'clear'];
+var cachedMethods = new Map();
 function getMethod(target, prop) {
   if (!(target instanceof IDBDatabase && !(prop in target) && typeof prop === 'string')) {
     return;
   }
   if (cachedMethods.get(prop)) return cachedMethods.get(prop);
-  const targetFuncName = prop.replace(/FromIndex$/, '');
-  const useIndex = prop !== targetFuncName;
-  const isWrite = writeMethods.includes(targetFuncName);
+  var targetFuncName = prop.replace(/FromIndex$/, '');
+  var useIndex = prop !== targetFuncName;
+  var isWrite = writeMethods.includes(targetFuncName);
   if (
   // Bail if the target doesn't exist on the target. Eg, getAll isn't in Edge.
   !(targetFuncName in (useIndex ? IDBIndex : IDBObjectStore).prototype) || !(isWrite || readMethods.includes(targetFuncName))) {
     return;
   }
-  const method = async function (storeName) {
-    // isWrite ? 'readwrite' : undefined gzipps better, but fails in Edge :(
-    const tx = this.transaction(storeName, isWrite ? 'readwrite' : 'readonly');
-    let target = tx.store;
-    for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-      args[_key - 1] = arguments[_key];
-    }
-    if (useIndex) target = target.index(args.shift());
-    const returnVal = await target[targetFuncName](...args);
-    if (isWrite) await tx.done;
-    return returnVal;
-  };
+  var method = /*#__PURE__*/function () {
+    var _ref3 = (0,_babel_runtime_helpers_esm_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2___default().mark(function _callee(storeName) {
+      var _target;
+      var tx,
+        target,
+        _len,
+        args,
+        _key,
+        returnVal,
+        _args = arguments;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2___default().wrap(function _callee$(_context) {
+        while (1) switch (_context.prev = _context.next) {
+          case 0:
+            // isWrite ? 'readwrite' : undefined gzipps better, but fails in Edge :(
+            tx = this.transaction(storeName, isWrite ? 'readwrite' : 'readonly');
+            target = tx.store;
+            for (_len = _args.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+              args[_key - 1] = _args[_key];
+            }
+            if (useIndex) target = target.index(args.shift());
+            _context.next = 6;
+            return (_target = target)[targetFuncName].apply(_target, args);
+          case 6:
+            returnVal = _context.sent;
+            if (!isWrite) {
+              _context.next = 10;
+              break;
+            }
+            _context.next = 10;
+            return tx.done;
+          case 10:
+            return _context.abrupt("return", returnVal);
+          case 11:
+          case "end":
+            return _context.stop();
+        }
+      }, _callee, this);
+    }));
+    return function method(_x) {
+      return _ref3.apply(this, arguments);
+    };
+  }();
   cachedMethods.set(prop, method);
   return method;
 }
-(0,_wrap_idb_value_js__WEBPACK_IMPORTED_MODULE_0__.r)(oldTraps => ({
-  ...oldTraps,
-  get: (target, prop, receiver) => getMethod(target, prop) || oldTraps.get(target, prop, receiver),
-  has: (target, prop) => !!getMethod(target, prop) || oldTraps.has(target, prop)
-}));
+(0,_wrap_idb_value_js__WEBPACK_IMPORTED_MODULE_3__.r)(function (oldTraps) {
+  return (0,_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__["default"])({}, oldTraps, {
+    get: function get(target, prop, receiver) {
+      return getMethod(target, prop) || oldTraps.get(target, prop, receiver);
+    },
+    has: function has(target, prop) {
+      return !!getMethod(target, prop) || oldTraps.has(target, prop);
+    }
+  });
+});
 
 
 /***/ }),
@@ -110,53 +159,57 @@ function getMethod(target, prop) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   a: () => (/* binding */ reverseTransformCache),
-/* harmony export */   i: () => (/* binding */ instanceOfAny),
-/* harmony export */   r: () => (/* binding */ replaceTraps),
-/* harmony export */   u: () => (/* binding */ unwrap),
-/* harmony export */   w: () => (/* binding */ wrap)
+/* harmony export */   "a": () => (/* binding */ reverseTransformCache),
+/* harmony export */   "i": () => (/* binding */ instanceOfAny),
+/* harmony export */   "r": () => (/* binding */ replaceTraps),
+/* harmony export */   "u": () => (/* binding */ unwrap),
+/* harmony export */   "w": () => (/* binding */ wrap)
 /* harmony export */ });
-const instanceOfAny = (object, constructors) => constructors.some(c => object instanceof c);
-let idbProxyableTypes;
-let cursorAdvanceMethods;
+var instanceOfAny = function instanceOfAny(object, constructors) {
+  return constructors.some(function (c) {
+    return object instanceof c;
+  });
+};
+var idbProxyableTypes;
+var cursorAdvanceMethods;
 // This is a function to prevent it throwing up in node environments.
 function getIdbProxyableTypes() {
   return idbProxyableTypes || (idbProxyableTypes = [IDBDatabase, IDBObjectStore, IDBIndex, IDBCursor, IDBTransaction]);
 }
 // This is a function to prevent it throwing up in node environments.
 function getCursorAdvanceMethods() {
-  return cursorAdvanceMethods || (cursorAdvanceMethods = [IDBCursor.prototype.advance, IDBCursor.prototype.continue, IDBCursor.prototype.continuePrimaryKey]);
+  return cursorAdvanceMethods || (cursorAdvanceMethods = [IDBCursor.prototype.advance, IDBCursor.prototype["continue"], IDBCursor.prototype.continuePrimaryKey]);
 }
-const cursorRequestMap = new WeakMap();
-const transactionDoneMap = new WeakMap();
-const transactionStoreNamesMap = new WeakMap();
-const transformCache = new WeakMap();
-const reverseTransformCache = new WeakMap();
+var cursorRequestMap = new WeakMap();
+var transactionDoneMap = new WeakMap();
+var transactionStoreNamesMap = new WeakMap();
+var transformCache = new WeakMap();
+var reverseTransformCache = new WeakMap();
 function promisifyRequest(request) {
-  const promise = new Promise((resolve, reject) => {
-    const unlisten = () => {
+  var promise = new Promise(function (resolve, reject) {
+    var unlisten = function unlisten() {
       request.removeEventListener('success', success);
       request.removeEventListener('error', error);
     };
-    const success = () => {
+    var success = function success() {
       resolve(wrap(request.result));
       unlisten();
     };
-    const error = () => {
+    var error = function error() {
       reject(request.error);
       unlisten();
     };
     request.addEventListener('success', success);
     request.addEventListener('error', error);
   });
-  promise.then(value => {
+  promise.then(function (value) {
     // Since cursoring reuses the IDBRequest (*sigh*), we cache it for later retrieval
     // (see wrapFunction).
     if (value instanceof IDBCursor) {
       cursorRequestMap.set(value, request);
     }
     // Catching to avoid "Uncaught Promise exceptions"
-  }).catch(() => {});
+  })["catch"](function () {});
   // This mapping exists in reverseTransformCache but doesn't doesn't exist in transformCache. This
   // is because we create many promises from a single IDBRequest.
   reverseTransformCache.set(promise, request);
@@ -165,17 +218,17 @@ function promisifyRequest(request) {
 function cacheDonePromiseForTransaction(tx) {
   // Early bail if we've already created a done promise for this transaction.
   if (transactionDoneMap.has(tx)) return;
-  const done = new Promise((resolve, reject) => {
-    const unlisten = () => {
+  var done = new Promise(function (resolve, reject) {
+    var unlisten = function unlisten() {
       tx.removeEventListener('complete', complete);
       tx.removeEventListener('error', error);
       tx.removeEventListener('abort', error);
     };
-    const complete = () => {
+    var complete = function complete() {
       resolve();
       unlisten();
     };
-    const error = () => {
+    var error = function error() {
       reject(tx.error || new DOMException('AbortError', 'AbortError'));
       unlisten();
     };
@@ -186,8 +239,8 @@ function cacheDonePromiseForTransaction(tx) {
   // Cache it for later retrieval.
   transactionDoneMap.set(tx, done);
 }
-let idbProxyTraps = {
-  get(target, prop, receiver) {
+var idbProxyTraps = {
+  get: function get(target, prop, receiver) {
     if (target instanceof IDBTransaction) {
       // Special handling for transaction.done.
       if (prop === 'done') return transactionDoneMap.get(target);
@@ -203,11 +256,11 @@ let idbProxyTraps = {
     // Else transform whatever we get back.
     return wrap(target[prop]);
   },
-  set(target, prop, value) {
+  set: function set(target, prop, value) {
     target[prop] = value;
     return true;
   },
-  has(target, prop) {
+  has: function has(target, prop) {
     if (target instanceof IDBTransaction && (prop === 'done' || prop === 'store')) {
       return true;
     }
@@ -226,7 +279,7 @@ function wrapFunction(func) {
       for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
         args[_key - 1] = arguments[_key];
       }
-      const tx = func.call(unwrap(this), storeNames, ...args);
+      var tx = func.call.apply(func, [unwrap(this), storeNames].concat(args));
       transactionStoreNamesMap.set(tx, storeNames.sort ? storeNames.sort() : [storeNames]);
       return wrap(tx);
     };
@@ -272,7 +325,7 @@ function wrap(value) {
   // If we've already transformed this value before, reuse the transformed value.
   // This is faster, but it also provides object equality.
   if (transformCache.has(value)) return transformCache.get(value);
-  const newValue = transformCachableValue(value);
+  var newValue = transformCachableValue(value);
   // Not all types are transformed.
   // These may be primitive types, so they can't be WeakMap keys.
   if (newValue !== value) {
@@ -281,7 +334,9 @@ function wrap(value) {
   }
   return newValue;
 }
-const unwrap = value => reverseTransformCache.get(value);
+var unwrap = function unwrap(value) {
+  return reverseTransformCache.get(value);
+};
 
 
 /***/ }),
@@ -296,21 +351,26 @@ const unwrap = value => reverseTransformCache.get(value);
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__),
-/* harmony export */   refreshSubscription: () => (/* binding */ refreshSubscription)
+/* harmony export */   "refreshSubscription": () => (/* binding */ refreshSubscription)
 /* harmony export */ });
-/* harmony import */ var flarum_common_extend__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! flarum/common/extend */ "flarum/common/extend");
-/* harmony import */ var flarum_common_extend__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(flarum_common_extend__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var flarum_common_components_Alert__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! flarum/common/components/Alert */ "flarum/common/components/Alert");
-/* harmony import */ var flarum_common_components_Alert__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(flarum_common_components_Alert__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var flarum_common_components_Button__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! flarum/common/components/Button */ "flarum/common/components/Button");
-/* harmony import */ var flarum_common_components_Button__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(flarum_common_components_Button__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var flarum_common_components_Link__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! flarum/common/components/Link */ "flarum/common/components/Link");
-/* harmony import */ var flarum_common_components_Link__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(flarum_common_components_Link__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var flarum_common_components_Page__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! flarum/common/components/Page */ "flarum/common/components/Page");
-/* harmony import */ var flarum_common_components_Page__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(flarum_common_components_Page__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var flarum_common_components_Icon__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! flarum/common/components/Icon */ "flarum/common/components/Icon");
-/* harmony import */ var flarum_common_components_Icon__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(flarum_common_components_Icon__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _use_pwa_builder__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./use-pwa-builder */ "./src/forum/use-pwa-builder.js");
+/* harmony import */ var _babel_runtime_helpers_esm_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/esm/asyncToGenerator */ "./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var flarum_common_extend__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! flarum/common/extend */ "flarum/common/extend");
+/* harmony import */ var flarum_common_extend__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(flarum_common_extend__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var flarum_common_components_Alert__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! flarum/common/components/Alert */ "flarum/common/components/Alert");
+/* harmony import */ var flarum_common_components_Alert__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(flarum_common_components_Alert__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var flarum_common_components_Button__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! flarum/common/components/Button */ "flarum/common/components/Button");
+/* harmony import */ var flarum_common_components_Button__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(flarum_common_components_Button__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var flarum_common_components_Link__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! flarum/common/components/Link */ "flarum/common/components/Link");
+/* harmony import */ var flarum_common_components_Link__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(flarum_common_components_Link__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var flarum_common_components_Page__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! flarum/common/components/Page */ "flarum/common/components/Page");
+/* harmony import */ var flarum_common_components_Page__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(flarum_common_components_Page__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var flarum_common_components_Icon__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! flarum/common/components/Icon */ "flarum/common/components/Icon");
+/* harmony import */ var flarum_common_components_Icon__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(flarum_common_components_Icon__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var _use_pwa_builder__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./use-pwa-builder */ "./src/forum/use-pwa-builder.js");
+
+var _this = undefined;
 
 
 
@@ -318,25 +378,26 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-const subscribeUser = save => {
+
+var subscribeUser = function subscribeUser(save) {
   return app.sw.pushManager.subscribe({
     userVisibleOnly: true,
     applicationServerKey: app.forum.attribute('vapidPublicKey')
-  }).then(subscription => {
+  }).then(function (subscription) {
     if (!save) return;
     app.request({
       method: 'POST',
       url: app.forum.attribute('apiUrl') + '/pwa/push',
       body: {
-        subscription
+        subscription: subscription
       }
     });
   });
 };
-const pushEnabled = () => {
+var pushEnabled = function pushEnabled() {
   if (!app.session.user) return false;
-  const obj = app.session.user.preferences();
-  let key;
+  var obj = app.session.user.preferences();
+  var key;
   for (key in obj) {
     if ((typeof key === 'string' || key instanceof String) && key.startsWith('notify_') && key.endsWith('_push') && obj[key]) {
       return true;
@@ -344,31 +405,60 @@ const pushEnabled = () => {
   }
   return false;
 };
-const supportsBrowserNotifications = () => 'Notification' in window;
-const refreshSubscription = async sw => {
-  if (!app.cache.pwaRefreshed && 'Notification' in window && window.Notification.permission === 'granted' && pushEnabled()) try {
-    await subscribeUser(true);
-  } catch (e) {
-    if (!sw.pushManager) {
-      return;
-    }
-    sw.pushManager.getSubscription().then(s => s.unsubscribe().then(subscribeUser.bind(undefined, true)));
-  }
-  app.cache.pwaRefreshed = true;
+var supportsBrowserNotifications = function supportsBrowserNotifications() {
+  return 'Notification' in window;
 };
-const pushConfigured = () => {
+var refreshSubscription = /*#__PURE__*/function () {
+  var _ref = (0,_babel_runtime_helpers_esm_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee(sw) {
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().wrap(function _callee$(_context) {
+      while (1) switch (_context.prev = _context.next) {
+        case 0:
+          if (!(!app.cache.pwaRefreshed && 'Notification' in window && window.Notification.permission === 'granted' && pushEnabled())) {
+            _context.next = 11;
+            break;
+          }
+          _context.prev = 1;
+          _context.next = 4;
+          return subscribeUser(true);
+        case 4:
+          _context.next = 11;
+          break;
+        case 6:
+          _context.prev = 6;
+          _context.t0 = _context["catch"](1);
+          if (sw.pushManager) {
+            _context.next = 10;
+            break;
+          }
+          return _context.abrupt("return");
+        case 10:
+          sw.pushManager.getSubscription().then(function (s) {
+            return s.unsubscribe().then(subscribeUser.bind(_this, true));
+          });
+        case 11:
+          app.cache.pwaRefreshed = true;
+        case 12:
+        case "end":
+          return _context.stop();
+      }
+    }, _callee, null, [[1, 6]]);
+  }));
+  return function refreshSubscription(_x) {
+    return _ref.apply(this, arguments);
+  };
+}();
+var pushConfigured = function pushConfigured() {
   return app.forum.attribute('vapidPublicKey');
 };
-let {
-  registerFirebasePushNotificationListeners,
-  removeFirebasePushNotificationListeners,
-  firebasePushNotificationState,
-  hasFirebasePushState
-} = (0,_use_pwa_builder__WEBPACK_IMPORTED_MODULE_6__.usePWABuilder)();
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (() => {
-  (0,flarum_common_extend__WEBPACK_IMPORTED_MODULE_0__.extend)((flarum_common_components_Page__WEBPACK_IMPORTED_MODULE_4___default().prototype), 'oncreate', () => {
+var _usePWABuilder = (0,_use_pwa_builder__WEBPACK_IMPORTED_MODULE_8__.usePWABuilder)(),
+  registerFirebasePushNotificationListeners = _usePWABuilder.registerFirebasePushNotificationListeners,
+  removeFirebasePushNotificationListeners = _usePWABuilder.removeFirebasePushNotificationListeners,
+  firebasePushNotificationState = _usePWABuilder.firebasePushNotificationState,
+  hasFirebasePushState = _usePWABuilder.hasFirebasePushState;
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (function () {
+  (0,flarum_common_extend__WEBPACK_IMPORTED_MODULE_2__.extend)((flarum_common_components_Page__WEBPACK_IMPORTED_MODULE_6___default().prototype), 'oncreate', function () {
     if (!pushConfigured()) return;
-    const dismissAlert = () => {
+    var dismissAlert = function dismissAlert() {
       localStorage.setItem('askvortov-pwa.notif-alert.dismissed', JSON.stringify({
         timestamp: new Date().getTime()
       }));
@@ -376,16 +466,18 @@ let {
     app.alerts.dismiss(app.cache.pwaNotifsAlert);
     if (!localStorage.getItem('askvortov-pwa.notif-alert.dismissed') && 'Notification' in window && window.Notification.permission === 'default' && pushEnabled()) {
       app.cache.pwaNotifsAlert = app.alerts.show({
-        controls: [m((flarum_common_components_Link__WEBPACK_IMPORTED_MODULE_3___default()), {
-          class: "Button Button--link",
+        controls: [m((flarum_common_components_Link__WEBPACK_IMPORTED_MODULE_5___default()), {
+          "class": "Button Button--link",
           href: app.route('settings'),
-          onclick: () => dismissAlert()
+          onclick: function onclick() {
+            return dismissAlert();
+          }
         }, app.translator.trans('askvortsov-pwa.forum.alerts.optin_button'))],
         ondismiss: dismissAlert
       }, app.translator.trans('askvortsov-pwa.forum.alerts.optin'));
     }
   });
-  (0,flarum_common_extend__WEBPACK_IMPORTED_MODULE_0__.extend)('flarum/forum/components/NotificationGrid', 'notificationMethods', function (items) {
+  (0,flarum_common_extend__WEBPACK_IMPORTED_MODULE_2__.extend)('flarum/forum/components/NotificationGrid', 'notificationMethods', function (items) {
     if (!pushConfigured()) return;
     items.add('push', {
       name: 'push',
@@ -393,30 +485,30 @@ let {
       label: app.translator.trans('askvortsov-pwa.forum.settings.push_header')
     });
   });
-  (0,flarum_common_extend__WEBPACK_IMPORTED_MODULE_0__.extend)('flarum/forum/components/SettingsPage', 'notificationsItems', function (items) {
-    if ((0,_use_pwa_builder__WEBPACK_IMPORTED_MODULE_6__.usingAppleWebview)()) return;
+  (0,flarum_common_extend__WEBPACK_IMPORTED_MODULE_2__.extend)('flarum/forum/components/SettingsPage', 'notificationsItems', function (items) {
+    if ((0,_use_pwa_builder__WEBPACK_IMPORTED_MODULE_8__.usingAppleWebview)()) return;
     if (!pushConfigured()) return;
     if (!supportsBrowserNotifications()) {
-      items.add('push-no-browser-support', flarum_common_components_Alert__WEBPACK_IMPORTED_MODULE_1___default().component({
+      items.add('push-no-browser-support', flarum_common_components_Alert__WEBPACK_IMPORTED_MODULE_3___default().component({
         dismissible: false,
         controls: [m("a", {
-          class: "Button Button--link",
+          "class": "Button Button--link",
           href: "https://developer.mozilla.org/en-US/docs/Web/API/Push_API"
         }, app.translator.trans('askvortsov-pwa.forum.settings.pwa_notifications.no_browser_support_button'))]
-      }, [m((flarum_common_components_Icon__WEBPACK_IMPORTED_MODULE_5___default()), {
+      }, [m((flarum_common_components_Icon__WEBPACK_IMPORTED_MODULE_7___default()), {
         name: "fas fa-exclamation-triangle"
       }), app.translator.trans('askvortsov-pwa.forum.settings.pwa_notifications.no_browser_support')]), 10);
       return;
     }
     if (window.Notification.permission === 'default') {
       if (!pushConfigured()) return;
-      items.add('push-optin-default', flarum_common_components_Alert__WEBPACK_IMPORTED_MODULE_1___default().component({
+      items.add('push-optin-default', flarum_common_components_Alert__WEBPACK_IMPORTED_MODULE_3___default().component({
         itemClassName: 'pwa-setting-alert',
         dismissible: false,
-        controls: [flarum_common_components_Button__WEBPACK_IMPORTED_MODULE_2___default().component({
+        controls: [flarum_common_components_Button__WEBPACK_IMPORTED_MODULE_4___default().component({
           className: 'Button Button--link',
-          onclick: () => {
-            window.Notification.requestPermission(res => {
+          onclick: function onclick() {
+            window.Notification.requestPermission(function (res) {
               m.redraw();
               if (res === 'granted') {
                 subscribeUser(true);
@@ -424,42 +516,44 @@ let {
             });
           }
         }, app.translator.trans('askvortsov-pwa.forum.settings.pwa_notifications.access_default_button'))]
-      }, [m((flarum_common_components_Icon__WEBPACK_IMPORTED_MODULE_5___default()), {
+      }, [m((flarum_common_components_Icon__WEBPACK_IMPORTED_MODULE_7___default()), {
         name: "fas fa-exclamation-circle"
       }), app.translator.trans('askvortsov-pwa.forum.settings.pwa_notifications.access_default')]), 10);
     } else if (window.Notification.permission === 'denied') {
-      items.add('push-optin-denied', flarum_common_components_Alert__WEBPACK_IMPORTED_MODULE_1___default().component({
+      items.add('push-optin-denied', flarum_common_components_Alert__WEBPACK_IMPORTED_MODULE_3___default().component({
         itemClassName: 'pwa-setting-alert',
         dismissible: false,
         type: 'error',
         controls: [m("a", {
-          class: "Button Button--link",
+          "class": "Button Button--link",
           href: "https://support.humblebundle.com/hc/en-us/articles/360008513933-Enabling-and-Disabling-Browser-Notifications-in-Various-Browsers"
         }, app.translator.trans('askvortsov-pwa.forum.settings.pwa_notifications.access_denied_button'))]
-      }, [m((flarum_common_components_Icon__WEBPACK_IMPORTED_MODULE_5___default()), {
+      }, [m((flarum_common_components_Icon__WEBPACK_IMPORTED_MODULE_7___default()), {
         name: "fas fa-exclamation-triangle"
       }), app.translator.trans('askvortsov-pwa.forum.settings.pwa_notifications.access_denied')]), 10);
     }
   });
-  (0,flarum_common_extend__WEBPACK_IMPORTED_MODULE_0__.extend)('flarum/forum/components/SettingsPage', 'notificationsItems', function (items) {
-    if (!(0,_use_pwa_builder__WEBPACK_IMPORTED_MODULE_6__.usingAppleWebview)()) return;
+  (0,flarum_common_extend__WEBPACK_IMPORTED_MODULE_2__.extend)('flarum/forum/components/SettingsPage', 'notificationsItems', function (items) {
+    if (!(0,_use_pwa_builder__WEBPACK_IMPORTED_MODULE_8__.usingAppleWebview)()) return;
     if (!hasFirebasePushState('authorized')) {
-      items.add('firebase-push-optin-default', flarum_common_components_Alert__WEBPACK_IMPORTED_MODULE_1___default().component({
+      items.add('firebase-push-optin-default', flarum_common_components_Alert__WEBPACK_IMPORTED_MODULE_3___default().component({
         itemClassName: 'pwa-setting-alert',
         dismissible: false,
-        controls: [flarum_common_components_Button__WEBPACK_IMPORTED_MODULE_2___default().component({
+        controls: [flarum_common_components_Button__WEBPACK_IMPORTED_MODULE_4___default().component({
           className: 'Button Button--link',
-          onclick: () => (0,_use_pwa_builder__WEBPACK_IMPORTED_MODULE_6__.requestPushPermissions)()
+          onclick: function onclick() {
+            return (0,_use_pwa_builder__WEBPACK_IMPORTED_MODULE_8__.requestPushPermissions)();
+          }
         }, app.translator.trans('askvortsov-pwa.forum.settings.pwa_notifications.access_default_button'))]
-      }, [m((flarum_common_components_Icon__WEBPACK_IMPORTED_MODULE_5___default()), {
+      }, [m((flarum_common_components_Icon__WEBPACK_IMPORTED_MODULE_7___default()), {
         name: "fas fa-exclamation-circle"
       }), app.translator.trans('askvortsov-pwa.forum.settings.pwa_notifications.access_default')]), 10);
     }
   });
-  (0,flarum_common_extend__WEBPACK_IMPORTED_MODULE_0__.extend)('flarum/forum/components/SettingsPage', 'oncreate', function () {
+  (0,flarum_common_extend__WEBPACK_IMPORTED_MODULE_2__.extend)('flarum/forum/components/SettingsPage', 'oncreate', function () {
     registerFirebasePushNotificationListeners();
   });
-  (0,flarum_common_extend__WEBPACK_IMPORTED_MODULE_0__.extend)('flarum/forum/components/SettingsPage', 'onremove', function () {
+  (0,flarum_common_extend__WEBPACK_IMPORTED_MODULE_2__.extend)('flarum/forum/components/SettingsPage', 'onremove', function () {
     removeFirebasePushNotificationListeners();
   });
 });
@@ -477,68 +571,99 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var flarum_common_extend__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! flarum/common/extend */ "flarum/common/extend");
-/* harmony import */ var flarum_common_extend__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(flarum_common_extend__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var flarum_common_utils_extractText__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! flarum/common/utils/extractText */ "flarum/common/utils/extractText");
-/* harmony import */ var flarum_common_utils_extractText__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(flarum_common_utils_extractText__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var flarum_forum_utils_DiscussionControls__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! flarum/forum/utils/DiscussionControls */ "flarum/forum/utils/DiscussionControls");
-/* harmony import */ var flarum_forum_utils_DiscussionControls__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(flarum_forum_utils_DiscussionControls__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var flarum_forum_utils_PostControls__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! flarum/forum/utils/PostControls */ "flarum/forum/utils/PostControls");
-/* harmony import */ var flarum_forum_utils_PostControls__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(flarum_forum_utils_PostControls__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var flarum_forum_utils_UserControls__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! flarum/forum/utils/UserControls */ "flarum/forum/utils/UserControls");
-/* harmony import */ var flarum_forum_utils_UserControls__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(flarum_forum_utils_UserControls__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var flarum_common_components_Button__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! flarum/common/components/Button */ "flarum/common/components/Button");
-/* harmony import */ var flarum_common_components_Button__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(flarum_common_components_Button__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _babel_runtime_helpers_esm_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/esm/asyncToGenerator */ "./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var flarum_common_extend__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! flarum/common/extend */ "flarum/common/extend");
+/* harmony import */ var flarum_common_extend__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(flarum_common_extend__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var flarum_common_utils_extractText__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! flarum/common/utils/extractText */ "flarum/common/utils/extractText");
+/* harmony import */ var flarum_common_utils_extractText__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(flarum_common_utils_extractText__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var flarum_forum_utils_DiscussionControls__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! flarum/forum/utils/DiscussionControls */ "flarum/forum/utils/DiscussionControls");
+/* harmony import */ var flarum_forum_utils_DiscussionControls__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(flarum_forum_utils_DiscussionControls__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var flarum_forum_utils_PostControls__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! flarum/forum/utils/PostControls */ "flarum/forum/utils/PostControls");
+/* harmony import */ var flarum_forum_utils_PostControls__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(flarum_forum_utils_PostControls__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var flarum_forum_utils_UserControls__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! flarum/forum/utils/UserControls */ "flarum/forum/utils/UserControls");
+/* harmony import */ var flarum_forum_utils_UserControls__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(flarum_forum_utils_UserControls__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var flarum_common_components_Button__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! flarum/common/components/Button */ "flarum/common/components/Button");
+/* harmony import */ var flarum_common_components_Button__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(flarum_common_components_Button__WEBPACK_IMPORTED_MODULE_7__);
 
 
 
 
 
 
-async function shareContent(data) {
-  try {
-    const title = flarum_common_utils_extractText__WEBPACK_IMPORTED_MODULE_1___default()(data.title);
-    await navigator.share({
-      title,
-      url: data.url
-    });
-    resultPara.textContent = 'MDN shared successfully';
-  } catch (err) {
-    console.log('Error: ' + err);
-  }
+
+
+function shareContent(_x) {
+  return _shareContent.apply(this, arguments);
 }
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (() => {
-  (0,flarum_common_extend__WEBPACK_IMPORTED_MODULE_0__.extend)((flarum_forum_utils_DiscussionControls__WEBPACK_IMPORTED_MODULE_2___default()), 'userControls', function (items, discussion) {
+function _shareContent() {
+  _shareContent = (0,_babel_runtime_helpers_esm_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee(data) {
+    var title;
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().wrap(function _callee$(_context) {
+      while (1) switch (_context.prev = _context.next) {
+        case 0:
+          _context.prev = 0;
+          title = flarum_common_utils_extractText__WEBPACK_IMPORTED_MODULE_3___default()(data.title);
+          _context.next = 4;
+          return navigator.share({
+            title: title,
+            url: data.url
+          });
+        case 4:
+          resultPara.textContent = 'MDN shared successfully';
+          _context.next = 10;
+          break;
+        case 7:
+          _context.prev = 7;
+          _context.t0 = _context["catch"](0);
+          console.log('Error: ' + _context.t0);
+        case 10:
+        case "end":
+          return _context.stop();
+      }
+    }, _callee, null, [[0, 7]]);
+  }));
+  return _shareContent.apply(this, arguments);
+}
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (function () {
+  (0,flarum_common_extend__WEBPACK_IMPORTED_MODULE_2__.extend)((flarum_forum_utils_DiscussionControls__WEBPACK_IMPORTED_MODULE_4___default()), 'userControls', function (items, discussion) {
     if (!navigator.share) return;
-    items.add('share', flarum_common_components_Button__WEBPACK_IMPORTED_MODULE_5___default().component({
+    items.add('share', flarum_common_components_Button__WEBPACK_IMPORTED_MODULE_7___default().component({
       icon: 'fas fa-share-square',
-      onclick: () => shareContent({
-        title: discussion.title(),
-        url: window.location.protocol + '//' + window.location.hostname + app.route.discussion(discussion)
-      })
+      onclick: function onclick() {
+        return shareContent({
+          title: discussion.title(),
+          url: window.location.protocol + '//' + window.location.hostname + app.route.discussion(discussion)
+        });
+      }
     }, app.translator.trans('askvortsov-pwa.forum.discussion_controls.share_button')), -1);
   });
-  (0,flarum_common_extend__WEBPACK_IMPORTED_MODULE_0__.extend)((flarum_forum_utils_PostControls__WEBPACK_IMPORTED_MODULE_3___default()), 'userControls', function (items, post) {
+  (0,flarum_common_extend__WEBPACK_IMPORTED_MODULE_2__.extend)((flarum_forum_utils_PostControls__WEBPACK_IMPORTED_MODULE_5___default()), 'userControls', function (items, post) {
     if (!navigator.share) return;
-    items.add('share', flarum_common_components_Button__WEBPACK_IMPORTED_MODULE_5___default().component({
+    items.add('share', flarum_common_components_Button__WEBPACK_IMPORTED_MODULE_7___default().component({
       icon: 'fas fa-share-square',
-      onclick: () => shareContent({
-        title: app.translator.trans('askvortsov-pwa.forum.post_controls.share_api.title', {
-          username: post.user().displayName(),
-          title: post.discussion().title()
-        }),
-        url: window.location.protocol + '//' + window.location.hostname + app.route.post(post)
-      })
+      onclick: function onclick() {
+        return shareContent({
+          title: app.translator.trans('askvortsov-pwa.forum.post_controls.share_api.title', {
+            username: post.user().displayName(),
+            title: post.discussion().title()
+          }),
+          url: window.location.protocol + '//' + window.location.hostname + app.route.post(post)
+        });
+      }
     }, app.translator.trans('askvortsov-pwa.forum.post_controls.share_button')), 100);
   });
-  (0,flarum_common_extend__WEBPACK_IMPORTED_MODULE_0__.extend)((flarum_forum_utils_UserControls__WEBPACK_IMPORTED_MODULE_4___default()), 'userControls', function (items, user) {
+  (0,flarum_common_extend__WEBPACK_IMPORTED_MODULE_2__.extend)((flarum_forum_utils_UserControls__WEBPACK_IMPORTED_MODULE_6___default()), 'userControls', function (items, user) {
     if (!navigator.share) return;
-    items.add('share', flarum_common_components_Button__WEBPACK_IMPORTED_MODULE_5___default().component({
+    items.add('share', flarum_common_components_Button__WEBPACK_IMPORTED_MODULE_7___default().component({
       icon: 'fas fa-share-square',
-      onclick: () => shareContent({
-        title: user.displayName(),
-        url: window.location.protocol + '//' + window.location.hostname + app.route.user(user)
-      })
+      onclick: function onclick() {
+        return shareContent({
+          title: user.displayName(),
+          url: window.location.protocol + '//' + window.location.hostname + app.route.user(user)
+        });
+      }
     }, app.translator.trans('askvortsov-pwa.forum.user_controls.share_button')), 100);
   });
 });
@@ -553,17 +678,20 @@ async function shareContent(data) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var flarum_common_extend__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! flarum/common/extend */ "flarum/common/extend");
-/* harmony import */ var flarum_common_extend__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(flarum_common_extend__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var idb__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! idb */ "./node_modules/idb/build/esm/index.js");
-/* harmony import */ var flarum_common_components_Page__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! flarum/common/components/Page */ "flarum/common/components/Page");
-/* harmony import */ var flarum_common_components_Page__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(flarum_common_components_Page__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var flarum_common_components_LinkButton__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! flarum/common/components/LinkButton */ "flarum/common/components/LinkButton");
-/* harmony import */ var flarum_common_components_LinkButton__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(flarum_common_components_LinkButton__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var flarum_forum_components_SessionDropdown__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! flarum/forum/components/SessionDropdown */ "flarum/forum/components/SessionDropdown");
-/* harmony import */ var flarum_forum_components_SessionDropdown__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(flarum_forum_components_SessionDropdown__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _addShareButtons__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./addShareButtons */ "./src/forum/addShareButtons.js");
-/* harmony import */ var _addPushNotifications__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./addPushNotifications */ "./src/forum/addPushNotifications.js");
+/* harmony import */ var _babel_runtime_helpers_esm_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/esm/asyncToGenerator */ "./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var flarum_common_extend__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! flarum/common/extend */ "flarum/common/extend");
+/* harmony import */ var flarum_common_extend__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(flarum_common_extend__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var idb__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! idb */ "./node_modules/idb/build/esm/index.js");
+/* harmony import */ var flarum_common_components_Page__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! flarum/common/components/Page */ "flarum/common/components/Page");
+/* harmony import */ var flarum_common_components_Page__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(flarum_common_components_Page__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var flarum_common_components_LinkButton__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! flarum/common/components/LinkButton */ "flarum/common/components/LinkButton");
+/* harmony import */ var flarum_common_components_LinkButton__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(flarum_common_components_LinkButton__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var flarum_forum_components_SessionDropdown__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! flarum/forum/components/SessionDropdown */ "flarum/forum/components/SessionDropdown");
+/* harmony import */ var flarum_forum_components_SessionDropdown__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(flarum_forum_components_SessionDropdown__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _addShareButtons__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./addShareButtons */ "./src/forum/addShareButtons.js");
+/* harmony import */ var _addPushNotifications__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./addPushNotifications */ "./src/forum/addPushNotifications.js");
 
 
 
@@ -571,34 +699,55 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-app.initializers.add('askvortsov/flarum-pwa', () => {
-  const isInStandaloneMode = () => window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone || document.referrer.includes('android-app://');
-  (0,flarum_common_extend__WEBPACK_IMPORTED_MODULE_0__.extend)((flarum_common_components_Page__WEBPACK_IMPORTED_MODULE_2___default().prototype), 'oninit', () => {
-    const basePath = app.forum.attribute('basePath').trimRight('/');
-    const registerSW = async () => {
-      const dbPromise = (0,idb__WEBPACK_IMPORTED_MODULE_1__.openDB)('keyval-store', 1, {
-        upgrade(db) {
-          db.createObjectStore('keyval');
-        }
-      });
-      (await dbPromise).put('keyval', app.forum.data.attributes, 'flarum.forumPayload');
-      if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register(basePath + '/sw', {
-          scope: basePath + '/'
-        }).then(sw => {
-          navigator.serviceWorker.ready.then(() => {
-            app.sw = sw;
-            (0,_addPushNotifications__WEBPACK_IMPORTED_MODULE_6__.refreshSubscription)(sw);
-          });
-        });
-      }
-    };
+
+
+app.initializers.add('askvortsov/flarum-pwa', function () {
+  var isInStandaloneMode = function isInStandaloneMode() {
+    return window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone || document.referrer.includes('android-app://');
+  };
+  (0,flarum_common_extend__WEBPACK_IMPORTED_MODULE_2__.extend)((flarum_common_components_Page__WEBPACK_IMPORTED_MODULE_4___default().prototype), 'oninit', function () {
+    var basePath = app.forum.attribute('basePath').trimRight('/');
+    var registerSW = /*#__PURE__*/function () {
+      var _ref = (0,_babel_runtime_helpers_esm_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee() {
+        var dbPromise;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().wrap(function _callee$(_context) {
+          while (1) switch (_context.prev = _context.next) {
+            case 0:
+              dbPromise = (0,idb__WEBPACK_IMPORTED_MODULE_3__.openDB)('keyval-store', 1, {
+                upgrade: function upgrade(db) {
+                  db.createObjectStore('keyval');
+                }
+              });
+              _context.next = 3;
+              return dbPromise;
+            case 3:
+              _context.sent.put('keyval', app.forum.data.attributes, 'flarum.forumPayload');
+              if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.register(basePath + '/sw', {
+                  scope: basePath + '/'
+                }).then(function (sw) {
+                  navigator.serviceWorker.ready.then(function () {
+                    app.sw = sw;
+                    (0,_addPushNotifications__WEBPACK_IMPORTED_MODULE_8__.refreshSubscription)(sw);
+                  });
+                });
+              }
+            case 5:
+            case "end":
+              return _context.stop();
+          }
+        }, _callee);
+      }));
+      return function registerSW() {
+        return _ref.apply(this, arguments);
+      };
+    }();
     registerSW();
   });
-  (0,flarum_common_extend__WEBPACK_IMPORTED_MODULE_0__.extend)((flarum_forum_components_SessionDropdown__WEBPACK_IMPORTED_MODULE_4___default().prototype), 'items', items => {
+  (0,flarum_common_extend__WEBPACK_IMPORTED_MODULE_2__.extend)((flarum_forum_components_SessionDropdown__WEBPACK_IMPORTED_MODULE_6___default().prototype), 'items', function (items) {
     if (isInStandaloneMode() && items.has('administration')) {
       items.remove('administration');
-      items.add('administration', flarum_common_components_LinkButton__WEBPACK_IMPORTED_MODULE_3___default().component({
+      items.add('administration', flarum_common_components_LinkButton__WEBPACK_IMPORTED_MODULE_5___default().component({
         icon: 'fas fa-wrench',
         href: app.forum.attribute('adminUrl'),
         target: '_self',
@@ -606,8 +755,9 @@ app.initializers.add('askvortsov/flarum-pwa', () => {
       }, app.translator.trans('core.forum.header.admin_button')));
     }
   });
-  (0,_addShareButtons__WEBPACK_IMPORTED_MODULE_5__["default"])();
-  (0,_addPushNotifications__WEBPACK_IMPORTED_MODULE_6__["default"])();
+
+  // addShareButtons();
+  (0,_addPushNotifications__WEBPACK_IMPORTED_MODULE_8__["default"])();
 });
 
 /***/ }),
@@ -621,51 +771,59 @@ app.initializers.add('askvortsov/flarum-pwa', () => {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   PushPermissionRequest: () => (/* binding */ PushPermissionRequest),
-/* harmony export */   PushPermissionState: () => (/* binding */ PushPermissionState),
-/* harmony export */   PushToken: () => (/* binding */ PushToken),
-/* harmony export */   requestPushPermissionState: () => (/* binding */ requestPushPermissionState),
-/* harmony export */   requestPushPermissions: () => (/* binding */ requestPushPermissions),
-/* harmony export */   requestPushToken: () => (/* binding */ requestPushToken),
-/* harmony export */   usePWABuilder: () => (/* binding */ usePWABuilder),
-/* harmony export */   usingAppleWebview: () => (/* binding */ usingAppleWebview)
+/* harmony export */   "PushPermissionRequest": () => (/* binding */ PushPermissionRequest),
+/* harmony export */   "PushPermissionState": () => (/* binding */ PushPermissionState),
+/* harmony export */   "PushToken": () => (/* binding */ PushToken),
+/* harmony export */   "requestPushPermissionState": () => (/* binding */ requestPushPermissionState),
+/* harmony export */   "requestPushPermissions": () => (/* binding */ requestPushPermissions),
+/* harmony export */   "requestPushToken": () => (/* binding */ requestPushToken),
+/* harmony export */   "usePWABuilder": () => (/* binding */ usePWABuilder),
+/* harmony export */   "usingAppleWebview": () => (/* binding */ usingAppleWebview)
 /* harmony export */ });
 /**
  * Triggered when the push token is generated by the device.
  */
-const PushToken = 'push-token';
+var PushToken = 'push-token';
 
 /**
  * Triggered when the user requests permission on the push event.
  */
-const PushPermissionRequest = 'push-permission-request';
+var PushPermissionRequest = 'push-permission-request';
 
 /**
  * Returns the state of the push request of the device.
  */
-const PushPermissionState = 'push-permission-state';
+var PushPermissionState = 'push-permission-state';
 
 /**
  * Check if the client is a webview in an iOS or iPadOS device.
  * @returns {boolean}
  */
-const usingAppleWebview = () => window.webkit && window.webkit.messageHandlers;
-const requestPushPermissionState = () => window.webkit.messageHandlers[PushPermissionState].postMessage(PushPermissionState);
-const requestPushPermissions = () => window.webkit.messageHandlers[PushPermissionRequest].postMessage(PushPermissionRequest);
-const requestPushToken = () => window.webkit.messageHandlers[PushToken].postMessage(PushToken);
-const usePWABuilder = () => {
+var usingAppleWebview = function usingAppleWebview() {
+  return window.webkit && window.webkit.messageHandlers;
+};
+var requestPushPermissionState = function requestPushPermissionState() {
+  return window.webkit.messageHandlers[PushPermissionState].postMessage(PushPermissionState);
+};
+var requestPushPermissions = function requestPushPermissions() {
+  return window.webkit.messageHandlers[PushPermissionRequest].postMessage(PushPermissionRequest);
+};
+var requestPushToken = function requestPushToken() {
+  return window.webkit.messageHandlers[PushToken].postMessage(PushToken);
+};
+var usePWABuilder = function usePWABuilder() {
   /**
    * @type {'notDetermined' | 'denied' | 'authorized' | 'ephemeral' | 'provisional' | 'unknown' | 'granted'}
    */
-  let permissionState = 'granted';
-  const handlePushPermissionRequest = event => {
+  var permissionState = 'granted';
+  var handlePushPermissionRequest = function handlePushPermissionRequest(event) {
     if (event.detail !== 'granted') {
       return;
     }
     permissionState = 'granted';
     requestPushToken();
   };
-  const handlePushToken = event => {
+  var handlePushToken = function handlePushToken(event) {
     app.request({
       method: 'POST',
       url: app.forum.attribute('apiUrl') + '/pwa/firebase-push-subscriptions',
@@ -674,7 +832,7 @@ const usePWABuilder = () => {
       }
     });
   };
-  const handlePushPermissionState = event => {
+  var handlePushPermissionState = function handlePushPermissionState(event) {
     permissionState = event.detail;
     m.redraw();
   };
@@ -684,7 +842,9 @@ const usePWABuilder = () => {
    *
    * @returns {boolean}
    */
-  const hasFirebasePushState = state => state === permissionState;
+  var hasFirebasePushState = function hasFirebasePushState(state) {
+    return state === permissionState;
+  };
   function registerFirebasePushNotificationListeners() {
     if (!usingAppleWebview()) {
       return;
@@ -703,143 +863,573 @@ const usePWABuilder = () => {
     window.removeEventListener(PushToken, handlePushToken);
   }
   return {
-    hasFirebasePushState,
-    registerFirebasePushNotificationListeners,
-    removeFirebasePushNotificationListeners
+    hasFirebasePushState: hasFirebasePushState,
+    registerFirebasePushNotificationListeners: registerFirebasePushNotificationListeners,
+    removeFirebasePushNotificationListeners: removeFirebasePushNotificationListeners
   };
 };
 
 /***/ }),
 
 /***/ "flarum/common/components/Alert":
-/*!********************************************************************!*\
-  !*** external "flarum.reg.get('core', 'common/components/Alert')" ***!
-  \********************************************************************/
+/*!****************************************************************!*\
+  !*** external "flarum.core.compat['common/components/Alert']" ***!
+  \****************************************************************/
 /***/ ((module) => {
 
 "use strict";
-module.exports = flarum.reg.get('core', 'common/components/Alert');
+module.exports = flarum.core.compat['common/components/Alert'];
 
 /***/ }),
 
 /***/ "flarum/common/components/Button":
-/*!*********************************************************************!*\
-  !*** external "flarum.reg.get('core', 'common/components/Button')" ***!
-  \*********************************************************************/
+/*!*****************************************************************!*\
+  !*** external "flarum.core.compat['common/components/Button']" ***!
+  \*****************************************************************/
 /***/ ((module) => {
 
 "use strict";
-module.exports = flarum.reg.get('core', 'common/components/Button');
+module.exports = flarum.core.compat['common/components/Button'];
 
 /***/ }),
 
 /***/ "flarum/common/components/Icon":
-/*!*******************************************************************!*\
-  !*** external "flarum.reg.get('core', 'common/components/Icon')" ***!
-  \*******************************************************************/
+/*!***************************************************************!*\
+  !*** external "flarum.core.compat['common/components/Icon']" ***!
+  \***************************************************************/
 /***/ ((module) => {
 
 "use strict";
-module.exports = flarum.reg.get('core', 'common/components/Icon');
+module.exports = flarum.core.compat['common/components/Icon'];
 
 /***/ }),
 
 /***/ "flarum/common/components/Link":
-/*!*******************************************************************!*\
-  !*** external "flarum.reg.get('core', 'common/components/Link')" ***!
-  \*******************************************************************/
+/*!***************************************************************!*\
+  !*** external "flarum.core.compat['common/components/Link']" ***!
+  \***************************************************************/
 /***/ ((module) => {
 
 "use strict";
-module.exports = flarum.reg.get('core', 'common/components/Link');
+module.exports = flarum.core.compat['common/components/Link'];
 
 /***/ }),
 
 /***/ "flarum/common/components/LinkButton":
-/*!*************************************************************************!*\
-  !*** external "flarum.reg.get('core', 'common/components/LinkButton')" ***!
-  \*************************************************************************/
+/*!*********************************************************************!*\
+  !*** external "flarum.core.compat['common/components/LinkButton']" ***!
+  \*********************************************************************/
 /***/ ((module) => {
 
 "use strict";
-module.exports = flarum.reg.get('core', 'common/components/LinkButton');
+module.exports = flarum.core.compat['common/components/LinkButton'];
 
 /***/ }),
 
 /***/ "flarum/common/components/Page":
-/*!*******************************************************************!*\
-  !*** external "flarum.reg.get('core', 'common/components/Page')" ***!
-  \*******************************************************************/
+/*!***************************************************************!*\
+  !*** external "flarum.core.compat['common/components/Page']" ***!
+  \***************************************************************/
 /***/ ((module) => {
 
 "use strict";
-module.exports = flarum.reg.get('core', 'common/components/Page');
+module.exports = flarum.core.compat['common/components/Page'];
 
 /***/ }),
 
 /***/ "flarum/common/extend":
-/*!**********************************************************!*\
-  !*** external "flarum.reg.get('core', 'common/extend')" ***!
-  \**********************************************************/
+/*!******************************************************!*\
+  !*** external "flarum.core.compat['common/extend']" ***!
+  \******************************************************/
 /***/ ((module) => {
 
 "use strict";
-module.exports = flarum.reg.get('core', 'common/extend');
+module.exports = flarum.core.compat['common/extend'];
 
 /***/ }),
 
 /***/ "flarum/common/utils/extractText":
-/*!*********************************************************************!*\
-  !*** external "flarum.reg.get('core', 'common/utils/extractText')" ***!
-  \*********************************************************************/
+/*!*****************************************************************!*\
+  !*** external "flarum.core.compat['common/utils/extractText']" ***!
+  \*****************************************************************/
 /***/ ((module) => {
 
 "use strict";
-module.exports = flarum.reg.get('core', 'common/utils/extractText');
+module.exports = flarum.core.compat['common/utils/extractText'];
 
 /***/ }),
 
 /***/ "flarum/forum/components/SessionDropdown":
-/*!*****************************************************************************!*\
-  !*** external "flarum.reg.get('core', 'forum/components/SessionDropdown')" ***!
-  \*****************************************************************************/
+/*!*************************************************************************!*\
+  !*** external "flarum.core.compat['forum/components/SessionDropdown']" ***!
+  \*************************************************************************/
 /***/ ((module) => {
 
 "use strict";
-module.exports = flarum.reg.get('core', 'forum/components/SessionDropdown');
+module.exports = flarum.core.compat['forum/components/SessionDropdown'];
 
 /***/ }),
 
 /***/ "flarum/forum/utils/DiscussionControls":
-/*!***************************************************************************!*\
-  !*** external "flarum.reg.get('core', 'forum/utils/DiscussionControls')" ***!
-  \***************************************************************************/
+/*!***********************************************************************!*\
+  !*** external "flarum.core.compat['forum/utils/DiscussionControls']" ***!
+  \***********************************************************************/
 /***/ ((module) => {
 
 "use strict";
-module.exports = flarum.reg.get('core', 'forum/utils/DiscussionControls');
+module.exports = flarum.core.compat['forum/utils/DiscussionControls'];
 
 /***/ }),
 
 /***/ "flarum/forum/utils/PostControls":
-/*!*********************************************************************!*\
-  !*** external "flarum.reg.get('core', 'forum/utils/PostControls')" ***!
-  \*********************************************************************/
+/*!*****************************************************************!*\
+  !*** external "flarum.core.compat['forum/utils/PostControls']" ***!
+  \*****************************************************************/
 /***/ ((module) => {
 
 "use strict";
-module.exports = flarum.reg.get('core', 'forum/utils/PostControls');
+module.exports = flarum.core.compat['forum/utils/PostControls'];
 
 /***/ }),
 
 /***/ "flarum/forum/utils/UserControls":
-/*!*********************************************************************!*\
-  !*** external "flarum.reg.get('core', 'forum/utils/UserControls')" ***!
-  \*********************************************************************/
+/*!*****************************************************************!*\
+  !*** external "flarum.core.compat['forum/utils/UserControls']" ***!
+  \*****************************************************************/
 /***/ ((module) => {
 
 "use strict";
-module.exports = flarum.reg.get('core', 'forum/utils/UserControls');
+module.exports = flarum.core.compat['forum/utils/UserControls'];
+
+/***/ }),
+
+/***/ "./node_modules/@babel/runtime/helpers/regeneratorRuntime.js":
+/*!*******************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/regeneratorRuntime.js ***!
+  \*******************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var _typeof = (__webpack_require__(/*! ./typeof.js */ "./node_modules/@babel/runtime/helpers/typeof.js")["default"]);
+function _regeneratorRuntime() {
+  "use strict";
+
+  /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */
+  module.exports = _regeneratorRuntime = function _regeneratorRuntime() {
+    return exports;
+  }, module.exports.__esModule = true, module.exports["default"] = module.exports;
+  var exports = {},
+    Op = Object.prototype,
+    hasOwn = Op.hasOwnProperty,
+    defineProperty = Object.defineProperty || function (obj, key, desc) {
+      obj[key] = desc.value;
+    },
+    $Symbol = "function" == typeof Symbol ? Symbol : {},
+    iteratorSymbol = $Symbol.iterator || "@@iterator",
+    asyncIteratorSymbol = $Symbol.asyncIterator || "@@asyncIterator",
+    toStringTagSymbol = $Symbol.toStringTag || "@@toStringTag";
+  function define(obj, key, value) {
+    return Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: !0,
+      configurable: !0,
+      writable: !0
+    }), obj[key];
+  }
+  try {
+    define({}, "");
+  } catch (err) {
+    define = function define(obj, key, value) {
+      return obj[key] = value;
+    };
+  }
+  function wrap(innerFn, outerFn, self, tryLocsList) {
+    var protoGenerator = outerFn && outerFn.prototype instanceof Generator ? outerFn : Generator,
+      generator = Object.create(protoGenerator.prototype),
+      context = new Context(tryLocsList || []);
+    return defineProperty(generator, "_invoke", {
+      value: makeInvokeMethod(innerFn, self, context)
+    }), generator;
+  }
+  function tryCatch(fn, obj, arg) {
+    try {
+      return {
+        type: "normal",
+        arg: fn.call(obj, arg)
+      };
+    } catch (err) {
+      return {
+        type: "throw",
+        arg: err
+      };
+    }
+  }
+  exports.wrap = wrap;
+  var ContinueSentinel = {};
+  function Generator() {}
+  function GeneratorFunction() {}
+  function GeneratorFunctionPrototype() {}
+  var IteratorPrototype = {};
+  define(IteratorPrototype, iteratorSymbol, function () {
+    return this;
+  });
+  var getProto = Object.getPrototypeOf,
+    NativeIteratorPrototype = getProto && getProto(getProto(values([])));
+  NativeIteratorPrototype && NativeIteratorPrototype !== Op && hasOwn.call(NativeIteratorPrototype, iteratorSymbol) && (IteratorPrototype = NativeIteratorPrototype);
+  var Gp = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(IteratorPrototype);
+  function defineIteratorMethods(prototype) {
+    ["next", "throw", "return"].forEach(function (method) {
+      define(prototype, method, function (arg) {
+        return this._invoke(method, arg);
+      });
+    });
+  }
+  function AsyncIterator(generator, PromiseImpl) {
+    function invoke(method, arg, resolve, reject) {
+      var record = tryCatch(generator[method], generator, arg);
+      if ("throw" !== record.type) {
+        var result = record.arg,
+          value = result.value;
+        return value && "object" == _typeof(value) && hasOwn.call(value, "__await") ? PromiseImpl.resolve(value.__await).then(function (value) {
+          invoke("next", value, resolve, reject);
+        }, function (err) {
+          invoke("throw", err, resolve, reject);
+        }) : PromiseImpl.resolve(value).then(function (unwrapped) {
+          result.value = unwrapped, resolve(result);
+        }, function (error) {
+          return invoke("throw", error, resolve, reject);
+        });
+      }
+      reject(record.arg);
+    }
+    var previousPromise;
+    defineProperty(this, "_invoke", {
+      value: function value(method, arg) {
+        function callInvokeWithMethodAndArg() {
+          return new PromiseImpl(function (resolve, reject) {
+            invoke(method, arg, resolve, reject);
+          });
+        }
+        return previousPromise = previousPromise ? previousPromise.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg();
+      }
+    });
+  }
+  function makeInvokeMethod(innerFn, self, context) {
+    var state = "suspendedStart";
+    return function (method, arg) {
+      if ("executing" === state) throw new Error("Generator is already running");
+      if ("completed" === state) {
+        if ("throw" === method) throw arg;
+        return doneResult();
+      }
+      for (context.method = method, context.arg = arg;;) {
+        var delegate = context.delegate;
+        if (delegate) {
+          var delegateResult = maybeInvokeDelegate(delegate, context);
+          if (delegateResult) {
+            if (delegateResult === ContinueSentinel) continue;
+            return delegateResult;
+          }
+        }
+        if ("next" === context.method) context.sent = context._sent = context.arg;else if ("throw" === context.method) {
+          if ("suspendedStart" === state) throw state = "completed", context.arg;
+          context.dispatchException(context.arg);
+        } else "return" === context.method && context.abrupt("return", context.arg);
+        state = "executing";
+        var record = tryCatch(innerFn, self, context);
+        if ("normal" === record.type) {
+          if (state = context.done ? "completed" : "suspendedYield", record.arg === ContinueSentinel) continue;
+          return {
+            value: record.arg,
+            done: context.done
+          };
+        }
+        "throw" === record.type && (state = "completed", context.method = "throw", context.arg = record.arg);
+      }
+    };
+  }
+  function maybeInvokeDelegate(delegate, context) {
+    var methodName = context.method,
+      method = delegate.iterator[methodName];
+    if (undefined === method) return context.delegate = null, "throw" === methodName && delegate.iterator["return"] && (context.method = "return", context.arg = undefined, maybeInvokeDelegate(delegate, context), "throw" === context.method) || "return" !== methodName && (context.method = "throw", context.arg = new TypeError("The iterator does not provide a '" + methodName + "' method")), ContinueSentinel;
+    var record = tryCatch(method, delegate.iterator, context.arg);
+    if ("throw" === record.type) return context.method = "throw", context.arg = record.arg, context.delegate = null, ContinueSentinel;
+    var info = record.arg;
+    return info ? info.done ? (context[delegate.resultName] = info.value, context.next = delegate.nextLoc, "return" !== context.method && (context.method = "next", context.arg = undefined), context.delegate = null, ContinueSentinel) : info : (context.method = "throw", context.arg = new TypeError("iterator result is not an object"), context.delegate = null, ContinueSentinel);
+  }
+  function pushTryEntry(locs) {
+    var entry = {
+      tryLoc: locs[0]
+    };
+    1 in locs && (entry.catchLoc = locs[1]), 2 in locs && (entry.finallyLoc = locs[2], entry.afterLoc = locs[3]), this.tryEntries.push(entry);
+  }
+  function resetTryEntry(entry) {
+    var record = entry.completion || {};
+    record.type = "normal", delete record.arg, entry.completion = record;
+  }
+  function Context(tryLocsList) {
+    this.tryEntries = [{
+      tryLoc: "root"
+    }], tryLocsList.forEach(pushTryEntry, this), this.reset(!0);
+  }
+  function values(iterable) {
+    if (iterable) {
+      var iteratorMethod = iterable[iteratorSymbol];
+      if (iteratorMethod) return iteratorMethod.call(iterable);
+      if ("function" == typeof iterable.next) return iterable;
+      if (!isNaN(iterable.length)) {
+        var i = -1,
+          next = function next() {
+            for (; ++i < iterable.length;) if (hasOwn.call(iterable, i)) return next.value = iterable[i], next.done = !1, next;
+            return next.value = undefined, next.done = !0, next;
+          };
+        return next.next = next;
+      }
+    }
+    return {
+      next: doneResult
+    };
+  }
+  function doneResult() {
+    return {
+      value: undefined,
+      done: !0
+    };
+  }
+  return GeneratorFunction.prototype = GeneratorFunctionPrototype, defineProperty(Gp, "constructor", {
+    value: GeneratorFunctionPrototype,
+    configurable: !0
+  }), defineProperty(GeneratorFunctionPrototype, "constructor", {
+    value: GeneratorFunction,
+    configurable: !0
+  }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, toStringTagSymbol, "GeneratorFunction"), exports.isGeneratorFunction = function (genFun) {
+    var ctor = "function" == typeof genFun && genFun.constructor;
+    return !!ctor && (ctor === GeneratorFunction || "GeneratorFunction" === (ctor.displayName || ctor.name));
+  }, exports.mark = function (genFun) {
+    return Object.setPrototypeOf ? Object.setPrototypeOf(genFun, GeneratorFunctionPrototype) : (genFun.__proto__ = GeneratorFunctionPrototype, define(genFun, toStringTagSymbol, "GeneratorFunction")), genFun.prototype = Object.create(Gp), genFun;
+  }, exports.awrap = function (arg) {
+    return {
+      __await: arg
+    };
+  }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, asyncIteratorSymbol, function () {
+    return this;
+  }), exports.AsyncIterator = AsyncIterator, exports.async = function (innerFn, outerFn, self, tryLocsList, PromiseImpl) {
+    void 0 === PromiseImpl && (PromiseImpl = Promise);
+    var iter = new AsyncIterator(wrap(innerFn, outerFn, self, tryLocsList), PromiseImpl);
+    return exports.isGeneratorFunction(outerFn) ? iter : iter.next().then(function (result) {
+      return result.done ? result.value : iter.next();
+    });
+  }, defineIteratorMethods(Gp), define(Gp, toStringTagSymbol, "Generator"), define(Gp, iteratorSymbol, function () {
+    return this;
+  }), define(Gp, "toString", function () {
+    return "[object Generator]";
+  }), exports.keys = function (val) {
+    var object = Object(val),
+      keys = [];
+    for (var key in object) keys.push(key);
+    return keys.reverse(), function next() {
+      for (; keys.length;) {
+        var key = keys.pop();
+        if (key in object) return next.value = key, next.done = !1, next;
+      }
+      return next.done = !0, next;
+    };
+  }, exports.values = values, Context.prototype = {
+    constructor: Context,
+    reset: function reset(skipTempReset) {
+      if (this.prev = 0, this.next = 0, this.sent = this._sent = undefined, this.done = !1, this.delegate = null, this.method = "next", this.arg = undefined, this.tryEntries.forEach(resetTryEntry), !skipTempReset) for (var name in this) "t" === name.charAt(0) && hasOwn.call(this, name) && !isNaN(+name.slice(1)) && (this[name] = undefined);
+    },
+    stop: function stop() {
+      this.done = !0;
+      var rootRecord = this.tryEntries[0].completion;
+      if ("throw" === rootRecord.type) throw rootRecord.arg;
+      return this.rval;
+    },
+    dispatchException: function dispatchException(exception) {
+      if (this.done) throw exception;
+      var context = this;
+      function handle(loc, caught) {
+        return record.type = "throw", record.arg = exception, context.next = loc, caught && (context.method = "next", context.arg = undefined), !!caught;
+      }
+      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
+        var entry = this.tryEntries[i],
+          record = entry.completion;
+        if ("root" === entry.tryLoc) return handle("end");
+        if (entry.tryLoc <= this.prev) {
+          var hasCatch = hasOwn.call(entry, "catchLoc"),
+            hasFinally = hasOwn.call(entry, "finallyLoc");
+          if (hasCatch && hasFinally) {
+            if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0);
+            if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc);
+          } else if (hasCatch) {
+            if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0);
+          } else {
+            if (!hasFinally) throw new Error("try statement without catch or finally");
+            if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc);
+          }
+        }
+      }
+    },
+    abrupt: function abrupt(type, arg) {
+      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
+        var entry = this.tryEntries[i];
+        if (entry.tryLoc <= this.prev && hasOwn.call(entry, "finallyLoc") && this.prev < entry.finallyLoc) {
+          var finallyEntry = entry;
+          break;
+        }
+      }
+      finallyEntry && ("break" === type || "continue" === type) && finallyEntry.tryLoc <= arg && arg <= finallyEntry.finallyLoc && (finallyEntry = null);
+      var record = finallyEntry ? finallyEntry.completion : {};
+      return record.type = type, record.arg = arg, finallyEntry ? (this.method = "next", this.next = finallyEntry.finallyLoc, ContinueSentinel) : this.complete(record);
+    },
+    complete: function complete(record, afterLoc) {
+      if ("throw" === record.type) throw record.arg;
+      return "break" === record.type || "continue" === record.type ? this.next = record.arg : "return" === record.type ? (this.rval = this.arg = record.arg, this.method = "return", this.next = "end") : "normal" === record.type && afterLoc && (this.next = afterLoc), ContinueSentinel;
+    },
+    finish: function finish(finallyLoc) {
+      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
+        var entry = this.tryEntries[i];
+        if (entry.finallyLoc === finallyLoc) return this.complete(entry.completion, entry.afterLoc), resetTryEntry(entry), ContinueSentinel;
+      }
+    },
+    "catch": function _catch(tryLoc) {
+      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
+        var entry = this.tryEntries[i];
+        if (entry.tryLoc === tryLoc) {
+          var record = entry.completion;
+          if ("throw" === record.type) {
+            var thrown = record.arg;
+            resetTryEntry(entry);
+          }
+          return thrown;
+        }
+      }
+      throw new Error("illegal catch attempt");
+    },
+    delegateYield: function delegateYield(iterable, resultName, nextLoc) {
+      return this.delegate = {
+        iterator: values(iterable),
+        resultName: resultName,
+        nextLoc: nextLoc
+      }, "next" === this.method && (this.arg = undefined), ContinueSentinel;
+    }
+  }, exports;
+}
+module.exports = _regeneratorRuntime, module.exports.__esModule = true, module.exports["default"] = module.exports;
+
+/***/ }),
+
+/***/ "./node_modules/@babel/runtime/helpers/typeof.js":
+/*!*******************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/typeof.js ***!
+  \*******************************************************/
+/***/ ((module) => {
+
+function _typeof(obj) {
+  "@babel/helpers - typeof";
+
+  return (module.exports = _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) {
+    return typeof obj;
+  } : function (obj) {
+    return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+  }, module.exports.__esModule = true, module.exports["default"] = module.exports), _typeof(obj);
+}
+module.exports = _typeof, module.exports.__esModule = true, module.exports["default"] = module.exports;
+
+/***/ }),
+
+/***/ "./node_modules/@babel/runtime/regenerator/index.js":
+/*!**********************************************************!*\
+  !*** ./node_modules/@babel/runtime/regenerator/index.js ***!
+  \**********************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+// TODO(Babel 8): Remove this file.
+
+var runtime = __webpack_require__(/*! ../helpers/regeneratorRuntime */ "./node_modules/@babel/runtime/helpers/regeneratorRuntime.js")();
+module.exports = runtime;
+
+// Copied from https://github.com/facebook/regenerator/blob/main/packages/runtime/runtime.js#L736=
+try {
+  regeneratorRuntime = runtime;
+} catch (accidentalStrictMode) {
+  if (typeof globalThis === "object") {
+    globalThis.regeneratorRuntime = runtime;
+  } else {
+    Function("r", "regeneratorRuntime = r")(runtime);
+  }
+}
+
+/***/ }),
+
+/***/ "./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js":
+/*!*********************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js ***!
+  \*********************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ _asyncToGenerator)
+/* harmony export */ });
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {
+  try {
+    var info = gen[key](arg);
+    var value = info.value;
+  } catch (error) {
+    reject(error);
+    return;
+  }
+  if (info.done) {
+    resolve(value);
+  } else {
+    Promise.resolve(value).then(_next, _throw);
+  }
+}
+function _asyncToGenerator(fn) {
+  return function () {
+    var self = this,
+      args = arguments;
+    return new Promise(function (resolve, reject) {
+      var gen = fn.apply(self, args);
+      function _next(value) {
+        asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);
+      }
+      function _throw(err) {
+        asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);
+      }
+      _next(undefined);
+    });
+  };
+}
+
+/***/ }),
+
+/***/ "./node_modules/@babel/runtime/helpers/esm/extends.js":
+/*!************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/esm/extends.js ***!
+  \************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ _extends)
+/* harmony export */ });
+function _extends() {
+  _extends = Object.assign ? Object.assign.bind() : function (target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i];
+      for (var key in source) {
+        if (Object.prototype.hasOwnProperty.call(source, key)) {
+          target[key] = source[key];
+        }
+      }
+    }
+    return target;
+  };
+  return _extends.apply(this, arguments);
+}
 
 /***/ })
 
@@ -850,7 +1440,7 @@ module.exports = flarum.reg.get('core', 'forum/utils/UserControls');
 /******/ 	
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
-/******/ 		flarum.reg._webpack_runtimes["askvortsov-pwa"] ||= __webpack_require__;// Check if module is in cache
+/******/ 		// Check if module is in cache
 /******/ 		var cachedModule = __webpack_module_cache__[moduleId];
 /******/ 		if (cachedModule !== undefined) {
 /******/ 			return cachedModule.exports;
@@ -912,7 +1502,7 @@ module.exports = flarum.reg.get('core', 'forum/utils/UserControls');
 /******/ 	
 /************************************************************************/
 var __webpack_exports__ = {};
-// This entry needs to be wrapped in an IIFE because it needs to be in strict mode.
+// This entry need to be wrapped in an IIFE because it need to be in strict mode.
 (() => {
 "use strict";
 /*!******************!*\
