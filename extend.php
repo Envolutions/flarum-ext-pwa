@@ -24,6 +24,8 @@ use Askvortsov\FlarumPWA\Forum\Controller\OfflineController;
 use Askvortsov\FlarumPWA\Forum\Controller\ServiceWorkerController;
 use Askvortsov\FlarumPWA\Forum\Controller\WebManifestController;
 use Askvortsov\FlarumPWA\Listener\CreateOrUpdateFirebasePushSubscriptionListener;
+use Flarum\Api\Resource\ForumResource;
+use Flarum\Api\Schema;
 use Flarum\Extend;
 use Flarum\Frontend\Document;
 use Flarum\Settings\SettingsRepositoryInterface;
@@ -31,8 +33,6 @@ use Flarum\User\User;
 use Illuminate\Contracts\Filesystem\Cloud;
 use Illuminate\Contracts\Filesystem\Factory;
 use Illuminate\Support\Arr;
-use Flarum\Api\Resource\ForumResource;
-use Flarum\Api\Schema;
 
 $metaClosure = function (Document $document) {
     $forumApiDocument = $document->getForumApiDocument();
@@ -57,7 +57,8 @@ $metaClosure = function (Document $document) {
     }
 };
 
-function icon_attr_arr() : array {
+function icon_attr_arr() : array
+{
     $settings = resolve(SettingsRepositoryInterface::class);
     $assets = resolve(Factory::class)->disk('flarum-assets');
     $icon_attr = [];
@@ -75,7 +76,7 @@ return [
         ->js(__DIR__.'/js/dist/forum.js')
         ->css(__DIR__.'/resources/less/forum.less')
         ->content($metaClosure),
-    
+
     (new Extend\Frontend('admin'))
         ->js(__DIR__.'/js/dist/admin.js')
         ->css(__DIR__.'/resources/less/admin.less')
@@ -87,7 +88,7 @@ return [
 
     (new Extend\Routes('api'))
         ->post('/pwa/logo/{size}', 'askvortsov-pwa.size_upload', UploadLogoController::class),
-    
+
     (new Extend\Routes('forum'))
         ->get('/webmanifest', 'askvortsov-pwa.webmanifest', WebManifestController::class)
         ->get('/sw', 'askvortsov-pwa.sw', ServiceWorkerController::class)
@@ -116,7 +117,7 @@ return [
 
     (new Extend\ServiceProvider())
         ->register(FlarumPWAServiceProvider::class),
-    
+
     (new Extend\Event())
         ->listen(CreateOrUpdateFirebasePushSubscriptionEvent::class, CreateOrUpdateFirebasePushSubscriptionListener::class)
         ->listen(UserSubscriptionCounterEvent::class, Listener\UserSubscriptionCounterListener::class)

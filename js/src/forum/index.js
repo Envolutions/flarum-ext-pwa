@@ -57,6 +57,6 @@ app.initializers.add('askvortsov/flarum-pwa', () => {
     }
   });
 
-  // addShareButtons();
+  addShareButtons();
   addPushNotifications();
 });

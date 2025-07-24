@@ -1,15 +1,24 @@
 <?php
 
+/*
+ * This file is part of askvortsov/flarum-pwa
+ *
+ *  Copyright (c) 2021 Alexander Skvortsov.
+ *
+ *  For detailed copyright and license information, please view the
+ *  LICENSE file that was distributed with this source code.
+ */
+
 namespace Askvortsov\FlarumPWA\Api\Resource;
 
 use Askvortsov\FlarumPWA\Event\CreatePushSubscriptionEvent;
 use Askvortsov\FlarumPWA\Event\UserSubscriptionCounterEvent;
+use Askvortsov\FlarumPWA\PushSubscription;
+use Carbon\Carbon;
 use Flarum\Api\Context;
 use Flarum\Api\Endpoint;
 use Flarum\Api\Resource;
 use Flarum\Api\Schema;
-use Askvortsov\FlarumPWA\PushSubscription;
-use Carbon\Carbon;
 use Flarum\Api\Resource\AbstractDatabaseResource;
 use Flarum\Http\Exception\InvalidParameterException;
 use Flarum\Settings\SettingsRepositoryInterface;
@@ -27,7 +36,8 @@ class PushSubscriptionResource extends AbstractDatabaseResource
 {
     public function __construct(
         protected SettingsRepositoryInterface $settings
-    ){}
+    ) {
+    }
 
     public function type(): string
     {
@@ -50,23 +60,23 @@ class PushSubscriptionResource extends AbstractDatabaseResource
         return [
             Endpoint\Endpoint::make('askvortsov-pwa.push.create')
                 ->route('POST', '/')
-                ->action(function (Context $context){
+                ->action(function (Context $context) {
                     $actor = $context->getActor();
                     $request = $context->request;
                     $actor->assertRegistered();
 
                     $data = Arr::get($request->getParsedBody(), 'subscription', []);
-                    
+
                     if (! ($endpoint = Arr::get($data, 'endpoint'))) {
                         throw new InvalidParameterException('Endpoint must be provided');
                     }
 
                     $existing = $this->query($context)->where('endpoint', $endpoint)->first();
-                    
+
                     if ($existing) {
-                        return ["results" => $existing];
+                        return ['results' => $existing];
                     }
-                    
+
                     $this->events->dispatch(
                         new UserSubscriptionCounterEvent($actor)
                     );
@@ -77,7 +87,7 @@ class PushSubscriptionResource extends AbstractDatabaseResource
                     if (! $allowed) {
                         throw new PermissionDeniedException();
                     }
-                    
+
                     $this->events->dispatch(
                         new CreatePushSubscriptionEvent(
                             $actor,
@@ -89,14 +99,13 @@ class PushSubscriptionResource extends AbstractDatabaseResource
                     );
 
                     $subscription = [];
-                    if ( $context->model ) {
+                    if ($context->model) {
                         $subscription = $context->model->where('user_id', $actor->id)->orderBy('id', 'desc')->first();
                     }
-                    
 
-                    return ["results" => $subscription];
+                    return ['results' => $subscription];
                 })
-                ->response(fn (Context $context, array $results) => new JsonResponse($results["results"]))
+                ->response(fn (Context $context, array $results) => new JsonResponse($results['results']))
         ];
     }
 
@@ -119,18 +128,10 @@ class PushSubscriptionResource extends AbstractDatabaseResource
             Schema\DateTime::make('expiresAt')
                 ->writable(),
 
-
             Schema\Relationship\ToOne::make('user')
                 ->includable()
                 // ->inverse('?') // the inverse relationship name if any.
                 ->type('users'), // the serialized type of this relation (type of the relation model's API resource).
-        ];
-    }
-
-    public function sorts(): array
-    {
-        return [
-            // SortColumn::make('createdAt'),
         ];
     }
 

@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of askvortsov/flarum-pwa
+ *
+ *  Copyright (c) 2021 Alexander Skvortsov.
+ *
+ *  For detailed copyright and license information, please view the
+ *  LICENSE file that was distributed with this source code.
+ */
+
 namespace Askvortsov\FlarumPWA\Api\Resource;
 
 use Askvortsov\FlarumPWA\Event\CreateOrUpdateFirebasePushSubscriptionEvent;
@@ -35,7 +44,7 @@ class FirebasePushSubscriptionResource extends AbstractDatabaseResource
         return [
             Endpoint\Endpoint::make('askvortsov-pwa.firebase-subscriptions.create')
                 ->route('POST', '/')
-                ->action(function (Context $context){
+                ->action(function (Context $context) {
                     $actor = $context->getActor();
                     $actor->assertRegistered();
                     $token = Arr::get($context->request->getParsedBody(), 'token', []);
