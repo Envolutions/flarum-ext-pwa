@@ -19,7 +19,7 @@ class CreatePushSubscriptionEvent
     public function __construct(
         public User $user,
         public string $endpoint,
-        public Carbon|null $expired_at,
+        public ?Carbon $expired_at,
         public string $vapid_public_key,
         public string $keys
     ) {
