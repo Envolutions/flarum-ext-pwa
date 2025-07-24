@@ -57,14 +57,14 @@ $metaClosure = function (Document $document) {
     }
 };
 
-function icon_attr_arr() : array
+function icon_attr_arr(): array
 {
     $settings = resolve(SettingsRepositoryInterface::class);
     $assets = resolve(Factory::class)->disk('flarum-assets');
     $icon_attr = [];
     foreach (Util::$ICON_SIZES as $size) {
         if ($sizePath = $settings->get('askvortsov-pwa.icon_'.strval($size).'_path')) {
-            $icon_attr = array_merge($icon_attr, [Schema\Str::make("pwa-icon-{$size}x{$size}Url")->get( fn()=>$assets->url($sizePath) )]);
+            $icon_attr = array_merge($icon_attr, [Schema\Str::make("pwa-icon-{$size}x{$size}Url")->get(fn () => $assets->url($sizePath))]);
         }
     }
 

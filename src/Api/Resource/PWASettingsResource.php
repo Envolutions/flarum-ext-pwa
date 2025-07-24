@@ -129,7 +129,7 @@ class PWASettingsResource extends AbstractResource
                         'status_messages' => $status_messages,
                     ];
                 })
-                ->response(function(Context $context, array $results) {
+                ->response(function (Context $context, array $results) {
                     return new JsonResponse([
                         'data' => [
                             'attributes' => $results,
@@ -161,7 +161,7 @@ class PWASettingsResource extends AbstractResource
                 ->response(fn () => new EmptyResponse(204)),
             Endpoint\Endpoint::make('askvortsov-pwa.reset_vapid')
                 ->route('POST', '/reset_vapid')
-                ->action(function(Context $context) {
+                ->action(function (Context $context) {
                     $context->getActor()->assertAdmin();
 
                     $keys = VAPID::createVapidKeys();
@@ -177,7 +177,7 @@ class PWASettingsResource extends AbstractResource
                 ->response(fn (Context $context, array $results) => new JsonResponse(['deleted' => $results['count']])),
             Endpoint\Endpoint::make('askvortsov-pwa.firebase-config.store')
                 ->route('POST', '/firebase-config')
-                ->action(function(Context $context) {
+                ->action(function (Context $context) {
                     $request = $context->request;
                     $files = $request->getUploadedFiles();
 
@@ -189,7 +189,7 @@ class PWASettingsResource extends AbstractResource
                         $config->getStream()->getContents(),
                     );
                 })
-                ->response(function() {
+                ->response(function () {
                     return new JsonResponse(['data' => null]);
                 })
         ];
